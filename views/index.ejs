@@ -11,7 +11,7 @@
 
 <body>
     <div class="container my-3 h-100  d-flex flex-column justify-content-start bg-secondary">
-        <form class="invoiceForm">
+        <form class="invoiceForm ">
             <div class="row my-3">
                 <div class="col-md-auto ">
                     <label for="InvoiceNumber" class="form-label">Invoice No.</label>
@@ -22,8 +22,8 @@
                     <input type="date" class="form-control" name="Date" />
                 </div>
             </div>
-            <div class="row my-3">
-                <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-5 mt-3">
                     <select class="form-select" aria-label="Default select example" name="Company Name">
                         <option>Company Name</option>
                         <option value="1">One</option>
@@ -31,44 +31,44 @@
                         <option value="3">Three</option>
                     </select>
                 </div>
-                <div class="col">
+                <div class="col mt-3">
                     <input type="text" class="form-control" name="GST" placeholder="Enter GST Number" />
                 </div>
             </div>
             <div class="row my-3">
                 <div class="col">
                     <label for="ProductName" class="form-label">Product Name</label>
-                    <input type="text" class="form-control" name="ProductName" placeholder="Enter Product Name" />
+                    <input type="text" class="form-control" name="ProductName" placeholder="Enter Product Name"  required/>
                 </div>
                 <div class="col">
                     <label for="HSN" class="form-label">HSN</label>
-                    <input type="number" class="form-control" name="HSN" placeholder="Enter HSN No." />
+                    <input type="number" class="form-control" min="0" name="HSN" placeholder="Enter HSN No." />
                 </div>
                 <div class="col">
                     <label for="Quantity" class="form-label">Quantity</label>
-                    <input type="number" class="form-control" name="Quantity" placeholder="Enter Quantity" />
+                    <input type="number" class="form-control" min="0" name="Quantity" placeholder="Enter Quantity"  required/>
                 </div>
                 <div class="col">
                     <label for="Price" class="form-label">Rate</label>
-                    <input type="number" class="form-control" name="Price" placeholder="Enter Price" />
+                    <input type="number" class="form-control" min="0" name="Price" placeholder="Enter Price" required />
                 </div>
             </div>
             <div class="my-3">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="CGST" value="option1">
+                    <input class="form-check-input" type="checkbox" name="CGST" value="9">
                     <label class="form-check-label" for="CGST">CGST 9%</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="SGST" value="option2">
+                    <input class="form-check-input" type="checkbox" name="SGST" value="9">
                     <label class="form-check-label" for="SGST">SGST 9%</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="IGST" value="option3" >
+                    <input class="form-check-input" type="checkbox" name="IGST" value="18" >
                     <label class="form-check-label" for="IGST">IGST 18%</label>
                   </div>
             </div>
             <div class="my-3 d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-info btn-add">Add</button>
+                <button type="submit" class="btn btn-outline-info btn-add">Add</button>
             </div>
             <div class="my-3  ">
                 <table class="table">
@@ -86,24 +86,24 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td class="text-end"colspan="5">CGST</td>
-                            <td>-</td>
+                            <td class="text-end "colspan="5">CGST</td>
+                            <td class="CGST">-</td>
                         </tr>
                         <tr>
-                            <td class="text-end"colspan="5">SGST</td>
-                            <td>-</td>
+                            <td class="text-end "colspan="5">SGST</td>
+                            <td class="SGST">-</td>
                         </tr>
                         <tr>
-                            <td class="text-end"colspan="5">IGST</td>
-                            <td>-</td>
+                            <td class="text-end "colspan="5">IGST</td>
+                            <td class="IGST">-</td>
                         </tr>
                         <tr>
                             <td class="text-end"colspan="5">Round Off</td>
-                            <td>-</td>
+                            <td class="roundOff">-</td>
                         </tr>
                         <tr>
-                            <td class="text-end"colspan="5">Grand Total</td>
-                            <td>-</td>
+                            <td class="text-end "colspan="5">Grand Total</td>
+                            <td class="grandTotal">-</td>
                         </tr>
                     </tfoot>
                 </table>

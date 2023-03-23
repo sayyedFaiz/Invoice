@@ -1,30 +1,63 @@
 var form = document.querySelector(".invoiceForm");
+var inputs = document.querySelectorAll('.form-control')
+var checkboxes = document.querySelectorAll('.form-check-input')
 var addButton = document.querySelector(".btn-add");
 var productTable = document.querySelector('tbody')
 var products = [];
 
+let hasValue = false
+addButton.addEventListener("click", (e) => {
+  //add a check for empty input fields
+  updateProducts()
+});
 
 
-
-addButton.addEventListener("click", () => {
+function updateProducts(){
   const data = Object.fromEntries(new FormData(form).entries());
-  // Push product name hsn quantity rate into products array
+  let productQuantity = parseFloat(data.Quantity)
+  let productPrice = parseFloat(data.Price)
+  let productAmount = (productQuantity*productPrice)
   products.unshift(
     {'ProductName':data.ProductName,
     'HSN': data.HSN,
-    'Quantity': data.Quantity,
-    'Price': data.Price
+    'Quantity': productQuantity,
+    'Price': productPrice,
+    'Amount': productAmount
   })
-  console.log(products)
-  console.log(productTable.childElementCount+1)
   let item =
 `  <tr>
     <td>${products.length}</td>
     <td>${products[0].ProductName}</td>
     <td>${products[0].HSN}</td>
-    <td>${products[0].Quantity}</td>
-    <td>${products[0].Price}</td>
+    <td>${productQuantity}</td>
+    <td>${productPrice.toFixed(2)}</td>
+    <td>${productAmount.toFixed(2)}</td>
   </tr>`
-  if(products.length <= 10)
-  productTable.insertAdjacentHTML('beforeend',item)
-});
+  if(products.length <= 10){
+    productTable.insertAdjacentHTML('beforeend',item)
+    calculateTotal()
+  }
+
+}
+
+function calculateTotal(){
+  let grandTotal = 0
+  let roundOff = 0
+  products.forEach((product)=>{
+    grandTotal = grandTotal + product.Amount
+  })
+  checkboxes.forEach((input)=>{
+    if(input.checked){
+      let GST = parseFloat(input.value)
+      document.querySelector(`.${input.name}`).innerHTML = `${GST}%`
+      console.log("Before :",grandTotal)
+      grandTotal = grandTotal + (grandTotal  * GST/100)
+      console.log("After : ",grandTotal)
+    }
+  })
+  roundOff = (Math.round(grandTotal) - grandTotal).toFixed(2)
+  document.querySelector('.grandTotal').innerHTML  = Math.round(grandTotal).toFixed(2)
+  document.querySelector('.roundOff').innerHTML = roundOff
+}
+
+
