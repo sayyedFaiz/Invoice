@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container my-3 h-100  d-flex flex-column justify-content-start bg-secondary">
+        <form class="invoiceForm">
+            <div class="row my-3">
+                <div class="col-md-auto ">
+                    <label for="InvoiceNumber" class="form-label">Invoice No.</label>
+                    <input type="number" class="form-control" name="InvoiceNumber" placeholder="Enter Invoice No." />
+                </div>
+                <div class="col-md-auto ms-auto">
+                    <label for="Date" class="form-label">Date</label>
+                    <input type="date" class="form-control" name="Date" />
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col-md-5">
+                    <select class="form-select" aria-label="Default select example" name="Company Name">
+                        <option>Company Name</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="GST" placeholder="Enter GST Number" />
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col">
+                    <label for="ProductName" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" name="ProductName" placeholder="Enter Product Name" />
+                </div>
+                <div class="col">
+                    <label for="HSN" class="form-label">HSN</label>
+                    <input type="number" class="form-control" name="HSN" placeholder="Enter HSN No." />
+                </div>
+                <div class="col">
+                    <label for="Quantity" class="form-label">Quantity</label>
+                    <input type="number" class="form-control" name="Quantity" placeholder="Enter Quantity" />
+                </div>
+                <div class="col">
+                    <label for="Price" class="form-label">Rate</label>
+                    <input type="number" class="form-control" name="Price" placeholder="Enter Price" />
+                </div>
+            </div>
+            <div class="my-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="CGST" value="option1">
+                    <label class="form-check-label" for="CGST">CGST 9%</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="SGST" value="option2">
+                    <label class="form-check-label" for="SGST">SGST 9%</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="IGST" value="option3" >
+                    <label class="form-check-label" for="IGST">IGST 18%</label>
+                  </div>
+            </div>
+            <div class="my-3 d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-info btn-add">Add</button>
+            </div>
+            <div class="my-3  ">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>Product Name</th>
+                            <th>HSN</th>
+                            <th>Qty.</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="text-end"colspan="5">CGST</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td class="text-end"colspan="5">SGST</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td class="text-end"colspan="5">IGST</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td class="text-end"colspan="5">Round Off</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td class="text-end"colspan="5">Grand Total</td>
+                            <td>-</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class=" my-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+        </form>
+    </div>
+    <!-- Bootstrap  -->
+    <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- CUSTOM  -->
+    <script src="/js/app.js"></script>
+</body>
+
+</html>
