@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Poppins:wght@400;600;700&display=swap");
+
+* {
+  font-family: "Inter", sans-serif;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.Company-Title {
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: 0.03em;
+}
+
+.contact-details {
+  top: 60px;
+}
+
+.phone-number,
+.mail-address,
+.GST-number {
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+}
+
+.invoice {
+  font-weight: 800;
+  font-size: 50px;
+  text-transform: uppercase;
+}
+
+/* .RemoveBtn{
+  cursor: pointer;
+}
+.RemoveBtn:hover{
+  color: red;
+} */
