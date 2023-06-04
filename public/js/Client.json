@@ -1,16 +1,21 @@
 {
-     "CompanyNames": [
+     "clientList": [
         {
             "Name":"Brassotech International",
             "Address": "484/A, GIDC, Shankar Tekri, Industrial estate,Jaam Nagar,Gujarat-361004",
             "GSTNumber":"24AANFB7797G1ZY",
-            "TransportName": "Transport Name: Ranjeet Transport (27AATPV4835F1Z2)"
+            "TransportName": "Transport Name: Ranjeet Transport (27AATPV4835F1Z2)",
+            "GSTValue":18,
+            "GST":"IGST"
         },
         {
-            "Name":"Brassotech International",
-            "Address": "484/A, GIDC, Shankar Tekri, Industrial estate,Jaam Nagar,Gujarat-361004",
-            "GSTNumber":"24AANFB7797G1ZY",
-            "TransportName": "Transport Name: Ranjeet Transport (27AATPV4835F1Z2)"
+            "Name":"Mehta Enterprises",
+            "Address": "15/98, Shiv Chaya, Nr. Municipal School,(F.C.I. Godown),Rajendra Nagaar, Borivali, Mumbai-400066",
+            "GSTNumber":"27AETPM3541H1Z6",
+            "TransportName": "",
+            "GSTValue":9,
+            "GST":"CGST"
+
         }
     ]
 }
