@@ -1,21 +1,29 @@
 import clientList from "./Client.json" assert { type: "json" };
 var form = document.querySelector(".invoiceForm");
-var inputs = document.querySelectorAll(".form-control");
-var checkboxes = document.querySelectorAll(".form-check-input");
 var addButton = document.querySelector(".btn-add");
+var submitButton = document.querySelector(".submitButton");
+var deleteButton = document.querySelector(".btn-delete");
 var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 var products = [];
 addButton.addEventListener("click", (e) => {
   if (form.checkValidity()) {
     updateProducts();
+    clearInputFields();
   } else {
     form.classList.add("was-validated");
     e.preventDefault();
     e.stopPropagation();
   }
 });
-
+deleteButton.addEventListener("click", () => {
+  if (products.length) {
+    products.pop();
+    productTable.lastElementChild.remove();
+    calculateTotal();
+    clearInputFields();
+  }
+});
 function updateProducts() {
   const data = Object.fromEntries(new FormData(form).entries());
   let productQuantity = parseFloat(data.Quantity);
@@ -42,16 +50,27 @@ function updateProducts() {
   }
 }
 
-function calculateTotal(CGST, SGST, IGST) {
+function calculateTotal() {
+  let tax = document.querySelectorAll(".tax");
+  tax.forEach((el) => {
+    if (el.innerHTML == "-") el.innerHTML = 0;
+  });
+  let CGST = document.querySelector(".CGST").innerHTML;
+  let IGST = document.querySelector(".IGST").innerHTML;
+  let SGST = document.querySelector(".SGST").innerHTML;
   let grandTotal = 0;
   let roundOff = 0;
   products.forEach((product) => {
     grandTotal = grandTotal + product.Amount;
   });
-  // console.log("Before :", grandTotal);
-  document.querySelector('.totalBeforeTax').innerHTML = grandTotal
-  grandTotal = grandTotal + (grandTotal * parseFloat(IGST)) / 100 + (grandTotal * parseFloat(CGST)) / 100 + (grandTotal * parseFloat(SGST)) / 100;
-  // console.log("After : ", grandTotal);
+  console.log("Before :", grandTotal);
+  document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
+  grandTotal =
+    grandTotal +
+    (grandTotal * parseFloat(IGST)) / 100 +
+    (grandTotal * parseFloat(CGST)) / 100 +
+    (grandTotal * parseFloat(SGST)) / 100;
+  console.log("After : ", grandTotal);
   roundOff = (Math.round(grandTotal) - grandTotal).toFixed(2);
   document.querySelector(".grandTotal").innerHTML =
     Math.round(grandTotal).toFixed(2);
@@ -63,9 +82,6 @@ clientName.addEventListener("change", (e) => {
   clientList.clientList.forEach((client) => {
     if (client.Name == e.target.value) {
       let GST = parseFloat(client.GSTValue);
-      IGST = GST;
-      CGST = 0;
-      SGST = 0;
       if (Object.values(client).includes("CGST")) {
         document.querySelector(`.SGST`).innerHTML = `${GST}%`;
         document.querySelector(`.CGST`).innerHTML = `${GST}%`;
@@ -77,8 +93,22 @@ clientName.addEventListener("change", (e) => {
         document.querySelector(`.${client.GST}`).innerHTML = `${GST}%`;
         document.querySelector(`.SGST`).innerHTML = "-";
         document.querySelector(`.CGST`).innerHTML = "-";
+        IGST = 18;
+        CGST = 0;
+        SGST = 0;
       }
+      document.querySelector('.client__Company-Name').innerHTML = client.Name
+      document.querySelector('.client__GST-number').innerHTML = client.GSTNumber
+      document.querySelector('.client__address').innerHTML = client.Address
+      document.querySelector('.client__Trasnport-details').innerHTML = client.TransportName
     }
   });
-  calculateTotal(CGST, SGST, IGST);
+  calculateTotal();
 });
+
+function clearInputFields() {
+  let productData = document.querySelectorAll(".productData");
+  productData.forEach((product) => {
+    product.value = "";
+  });
+}

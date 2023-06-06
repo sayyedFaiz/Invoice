@@ -1,125 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css" />
     <title>Invoice</title>
-</head>
+  </head>
 
-<body>
-    <div class="container my-3 h-100  d-flex flex-column justify-content-start position-relative">
-        <div class="row">
-            <div class="col ">
-                <h1 class="Company-Title text-center">SAYYED ENGINEERING WORKS</h1>
-                <div class="contact-details d-flex justify-content-center">
-                    <div class="phone mx-3 d-flex justify-content-center align-items-center">
-                        <img src="/images/fluent_call-32-filled.svg">
-                        <p class="phone-number my-0">+91 9867538527</p>
-                    </div>
-                    <div class="mail d-flex justify-content-center align-items-center">
-                        <img src="/images/quill_mail.svg">
-                        <p class="mail-address my-0 mx-1">sayyedengworks@gmail.com</p>
-                    </div>
-                    <div class="GST mx-3 d-flex justify-content-center align-items-center">
-                        <p class="GST-number my-0">GST:27AHSPB7715N1ZR</p>
-                    </div>
-                </div>
-            </div>
+  <body>
+    <div
+      class="container my-3 h-100 d-flex flex-column justify-content-start position-relative"
+    >
+      <%- include('./template/header') %>
+      <div class="row">
+        <div class="col-md-5 client-details">
+          <div class="client-details-container d-flex flex-column">
+            <span class="receiver">To</span>
+            <div class="client__Company-Name fw-bold fs-3"></div>
+            <div class="client__GST-number"></div>
+            <div class="client__address "></div>
+            <div class="client__Trasnport-details fw-bold fs-7"></div>
+          </div>
         </div>
-        <div class="row mt-4">
-            <div class="col">
-                <h1 class="invoice">invoice</h1>
-            </div>
-        </div>
-        <!-- <div class="row">
-            <div class="col">
-                <div class="client-address-container d-flex flex-column">
-                    <span>To</span>
-                    <span class="GST-number-label ">GST:</span>
-                    <span class="client-address">Address:</span>
-                    <span class="Trasnport-details">Transport Name:</span>
-                </div>
-            </div>
+        <!-- <div class="col-md-auto">
+          <div class="Date">Date: <span>04/06/2023</span></div>
+          <div class="Invoice">Invoice No: <span>01</span></div>
         </div> -->
-        <form class="invoiceForm needs-validation ">
-            <div class="row my-3">
-                <div class="col-md-auto InvoiceNumber-container ">
-                    <label for="InvoiceNumber" class="form-label-InvoiceNumber">Invoice No.</label>
-                    <input type="number" class="form-control InvoiceNumber-Input" name="InvoiceNumber"
-                        id="InvoiceNumber" placeholder="Enter Invoice No." />
-                </div>
-                <div class="col-md-auto ms-auto">
-                    <label for="Date" class="form-label Date-label">Date:</label>
-                    <input type="date" class="form-control Date-Input" id="Date" name="Date" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5 mt-3">
-                    <select class="form-select Client-company-name" name="Company Name">
-                        <option>Company Name</option>
-                        <% clientList.forEach((client)=>{ %>
-                            <option class="clientList">
-                                <%= client.Name %>
-                            </option>
-                            <% }); %>
-                    </select>
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class="col">
-                    <label for="ProductName" class="form-label d-print-none">Product Name</label>
-                    <input type="text" class="form-control d-print-none" name="ProductName"
-                        placeholder="Enter Product Name" required />
-                </div>
-                <div class="col">
-                    <label for="HSN" class="form-label d-print-none">HSN</label>
-                    <input type="number" class="form-control d-print-none" min="0" name="HSN"
-                        placeholder="Enter HSN No." />
-                </div>
-                <div class="col">
-                    <label for="Quantity" class="form-label d-print-none">Quantity</label>
-                    <input type="number" class="form-control d-print-none" min="0" name="Quantity"
-                        placeholder="Enter Quantity" required />
-                </div>
-                <div class="col">
-                    <label for="Price" class="form-label d-print-none">Rate</label>
-                    <input type="number" class="form-control d-print-none" step="any" min="0" name="Price"
-                        placeholder="Enter Price" required />
-                </div>
-            </div>
-            <!-- <div class="my-3">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input d-print-none" type="checkbox" name="CGST" value="9">
-                    <label class="form-check-label d-print-none" for="CGST">CGST 9%</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input d-print-none" type="checkbox" name="SGST" value="9">
-                    <label class="form-check-label d-print-none" for="SGST">SGST 9%</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input d-print-none" type="checkbox" name="IGST" value="18">
-                    <label class="form-check-label d-print-none" for="IGST">IGST 18%</label>
-                </div>
-            </div> -->
-            <div class="my-3 d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-info btn-add d-print-none">Add</button>
-            </div>
-            <div class="my-3">
-                <%- include('./template/table') %>
-            </div>
-            <div class=" my-3">
-                <button type="button" class="btn btn-primary d-print-none">Submit</button>
-            </div>
-        </form>
+      </div>
+      <form class="invoiceForm needs-validation">
+        <div class="row my-3">
+          <div class="col-md-auto InvoiceNumber-container">
+            <label for="InvoiceNumber" class="form-label-InvoiceNumber"
+              >Invoice No.</label
+            >
+
+            <input
+              type="number"
+              class="form-control InvoiceNumber-Input"
+              name="InvoiceNumber"
+              id="InvoiceNumber"
+              placeholder="Enter Invoice No."
+            />
+          </div>
+          <div class="col-md-auto ms-auto">
+            <label for="Date" class="form-label Date-label">Date:</label>
+            <input
+              type="date"
+              class="form-control Date-Input"
+              id="Date"
+              name="Date"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5 mt-3">
+            <select class="form-select Client-company-name" name="Company Name">
+              <option>Company Name</option>
+              <% clientList.forEach((client)=>{ %>
+              <option class="clientList"><%= client.Name %></option>
+              <% }); %>
+            </select>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col">
+            <label for="ProductName" class="form-label d-print-none"
+              >Product Name</label
+            >
+            <input
+              type="text"
+              class="form-control d-print-none productData"
+              name="ProductName"
+              placeholder="Enter Product Name"
+              required
+            />
+          </div>
+          <div class="col">
+            <label for="HSN" class="form-label d-print-none">HSN</label>
+            <input
+              type="number"
+              class="form-control d-print-none productData"
+              min="0"
+              name="HSN"
+              placeholder="Enter HSN No."
+            />
+          </div>
+          <div class="col">
+            <label for="Quantity" class="form-label d-print-none"
+              >Quantity</label
+            >
+            <input
+              type="number"
+              class="form-control d-print-none productData"
+              min="0"
+              name="Quantity"
+              placeholder="Enter Quantity"
+              required
+            />
+          </div>
+          <div class="col">
+            <label for="Price" class="form-label d-print-none">Rate</label>
+            <input
+              type="number"
+              class="form-control d-print-none productData"
+              step="any"
+              min="0"
+              name="Price"
+              placeholder="Enter Price"
+              required
+            />
+          </div>
+        </div>
+        <div class="my-3 d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-outline-info btn-add d-print-none mx-3"
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-delete d-print-none"
+          >
+            Delete
+          </button>
+        </div>
+        <div class="my-3"><%- include('./template/table') %></div>
+        <div class="my-3">
+          <button
+            type="button"
+            class="btn btn-primary submitButton d-print-none"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
     <!-- Bootstrap  -->
     <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- CUSTOM  -->
     <script type="module" src="/js/app.js"></script>
-</body>
-
+  </body>
 </html>

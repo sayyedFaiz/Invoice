@@ -1,21 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css" />
     <title>Print</title>
-</head>
+  </head>
 
-<body>
-    <%- include('./template/table') %>
+  <body>
+    <div class="container my-3">
+      <%- include('./template/header') %>
+      <div class="row ">
+        <div class="col">
+          <div class="client-address-container d-flex flex-column">
+            <span>To</span>
+            <span class="GST-number-label">GST:</span>
+            <span class="client-address">Address:</span>
+            <span class="Trasnport-details">Transport Name:</span>
+          </div>
+        </div>
+        <!-- <div class="col-md-auto">
+          <div class="Date">Date: <span>04/06/2023</span></div>
+          <div class="Invoice">Invoice No: <span>01</span></div>
+        </div> -->
+      </div>
+      <%- include('./template/table') %>
+    </div>
 
     <!-- Bootstrap  -->
     <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- CUSTOM  -->
     <script src="/js/app.js"></script>
-</body>
+  </body>
 </html>

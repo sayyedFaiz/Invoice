@@ -33,9 +33,6 @@ input::-webkit-inner-spin-button {
   text-transform: uppercase;
 }
 
-/* .RemoveBtn{
-  cursor: pointer;
+.client-details{
+  width: 70%;
 }
-.RemoveBtn:hover{
-  color: red;
-} */
