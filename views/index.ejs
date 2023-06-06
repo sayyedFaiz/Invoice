@@ -10,26 +10,9 @@
   </head>
 
   <body>
-    <div
-      class="container my-3 h-100 d-flex flex-column justify-content-start position-relative"
-    >
+    <div class="container  h-100 d-flex flex-column justify-content-start ">
       <%- include('./template/header') %>
-      <div class="row">
-        <div class="col-md-5 client-details">
-          <div class="client-details-container d-flex flex-column">
-            <span class="receiver">To</span>
-            <div class="client__Company-Name fw-bold fs-3"></div>
-            <div class="client__GST-number"></div>
-            <div class="client__address "></div>
-            <div class="client__Trasnport-details fw-bold fs-7"></div>
-          </div>
-        </div>
-        <!-- <div class="col-md-auto">
-          <div class="Date">Date: <span>04/06/2023</span></div>
-          <div class="Invoice">Invoice No: <span>01</span></div>
-        </div> -->
-      </div>
-      <form class="invoiceForm needs-validation">
+      <form class="invoiceForm needs-validation d-print-none">
         <div class="row my-3">
           <div class="col-md-auto InvoiceNumber-container">
             <label for="InvoiceNumber" class="form-label-InvoiceNumber"
@@ -51,6 +34,7 @@
               class="form-control Date-Input"
               id="Date"
               name="Date"
+              format="dd/mm/yyyy"
             />
           </div>
         </div>
@@ -127,7 +111,6 @@
             Delete
           </button>
         </div>
-        <div class="my-3"><%- include('./template/table') %></div>
         <div class="my-3">
           <button
             type="button"
@@ -137,6 +120,8 @@
           </button>
         </div>
       </form>
+      <%- include('./template/table') %>
+      <%- include('./template/footer') %>
     </div>
     <!-- Bootstrap  -->
     <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

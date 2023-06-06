@@ -30,6 +30,8 @@ function updateProducts() {
   let productPrice = parseFloat(data.Price);
   let productAmount = productQuantity * productPrice;
   products.unshift({
+    date: data.Date,
+    InvoiceNumber : data.InvoiceNumber,
     ProductName: data.ProductName,
     HSN: data.HSN,
     Quantity: productQuantity,
@@ -112,3 +114,16 @@ function clearInputFields() {
     product.value = "";
   });
 }
+
+function print(){
+  let dateField = document.querySelector('.Date')
+  let InvoiceField = document.querySelector('.Invoice')
+  InvoiceField.innerHTML = products[0].InvoiceNumber
+  dateField.innerHTML = products[0].date
+}
+
+
+submitButton.addEventListener('click',()=>{
+  print()
+  window.print()
+})

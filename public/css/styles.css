@@ -29,10 +29,27 @@ input::-webkit-inner-spin-button {
 
 .invoice {
   font-weight: 800;
-  font-size: 50px;
+  font-size: 30px;
   text-transform: uppercase;
 }
 
-.client-details{
-  width: 70%;
+.client-details {
+  width: 60%;
+}
+
+.dateInvoice {
+  right: 0;
+  width: fit-content;
+}
+
+@media print {
+  /* .table-dark {
+    background: #212529 !important;
+  } */
+  .dateInvoice{
+    display: block !important;
+  }
+  .footer{
+    display: flex !important;
+  }
 }
