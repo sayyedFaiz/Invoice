@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/print.css" media="print">
+
     <title>Invoice</title>
   </head>
 
   <body>
-    <div class="container  h-100 d-flex flex-column justify-content-start ">
+    <div class="container h-100 " id="print">
       <%- include('./template/header') %>
       <form class="invoiceForm needs-validation d-print-none">
         <div class="row my-3">
@@ -18,7 +21,9 @@
             <label for="InvoiceNumber" class="form-label-InvoiceNumber"
               >Invoice No.</label
             >
-
+            <label class=" mx-3 form-label text-secondary"
+              >Last Bill No. <span class="lastInvoiceNumber"></span></label
+            >
             <input
               type="number"
               class="form-control InvoiceNumber-Input"
@@ -120,12 +125,12 @@
           </button>
         </div>
       </form>
-      <%- include('./template/table') %>
-      <%- include('./template/footer') %>
+      <%- include('./template/table') %> <%- include('./template/footer') %>
     </div>
     <!-- Bootstrap  -->
     <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- CUSTOM  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <script type="module" src="/js/app.js"></script>
   </body>
 </html>

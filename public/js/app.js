@@ -1,4 +1,5 @@
 import clientList from "./Client.json" assert { type: "json" };
+
 var form = document.querySelector(".invoiceForm");
 var addButton = document.querySelector(".btn-add");
 var submitButton = document.querySelector(".submitButton");
@@ -6,6 +7,8 @@ var deleteButton = document.querySelector(".btn-delete");
 var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 var products = [];
+const lastInvoiceNumber = localStorage.getItem('InvoiceNumber');
+document.querySelector('.lastInvoiceNumber').innerHTML = lastInvoiceNumber
 addButton.addEventListener("click", (e) => {
   if (form.checkValidity()) {
     updateProducts();
@@ -29,9 +32,10 @@ function updateProducts() {
   let productQuantity = parseFloat(data.Quantity);
   let productPrice = parseFloat(data.Price);
   let productAmount = productQuantity * productPrice;
+  // Set an item in local storage
   products.unshift({
     date: data.Date,
-    InvoiceNumber : data.InvoiceNumber,
+    InvoiceNumber: data.InvoiceNumber,
     ProductName: data.ProductName,
     HSN: data.HSN,
     Quantity: productQuantity,
@@ -99,10 +103,12 @@ clientName.addEventListener("change", (e) => {
         CGST = 0;
         SGST = 0;
       }
-      document.querySelector('.client__Company-Name').innerHTML = client.Name
-      document.querySelector('.client__GST-number').innerHTML = client.GSTNumber
-      document.querySelector('.client__address').innerHTML = client.Address
-      document.querySelector('.client__Trasnport-details').innerHTML = client.TransportName
+      document.querySelector(".client__Company-Name").innerHTML = client.Name;
+      document.querySelector(".client__GST-number").innerHTML =
+        client.GSTNumber;
+      document.querySelector(".client__address").innerHTML = client.Address;
+      document.querySelector(".client__Trasnport-details").innerHTML =
+        client.TransportName;
     }
   });
   calculateTotal();
@@ -115,15 +121,18 @@ function clearInputFields() {
   });
 }
 
-function print(){
-  let dateField = document.querySelector('.Date')
-  let InvoiceField = document.querySelector('.Invoice')
-  InvoiceField.innerHTML = products[0].InvoiceNumber
-  dateField.innerHTML = products[0].date
+function print() {
+  let dateField = document.querySelector(".Date");
+  let InvoiceField = document.querySelector(".Invoice");
+  InvoiceField.innerHTML = products[0].InvoiceNumber;
+  localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
+
+  dateField.innerHTML = products[0].date;
 }
 
-
-submitButton.addEventListener('click',()=>{
-  print()
-  window.print()
-})
+submitButton.addEventListener("click", () => {
+  print();
+  window.print();
+  const element = document.getElementById("print"); // Replace with the ID of the element you want to convert to PDF
+  // html2pdf().from(element).save();
+});

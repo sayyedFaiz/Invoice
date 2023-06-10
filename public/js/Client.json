@@ -16,6 +16,15 @@
             "GSTValue":9,
             "GST":"CGST"
 
+        },
+        {
+            "Name":"Hira Industries",
+            "Address": "26/A, Panchal Udyog Nagar, Bhayander (East)",
+            "GSTNumber":"GST: 27AA1PJ3818K1ZH",
+            "TransportName": "",
+            "GSTValue":9,
+            "GST":"CGST"
+
         }
     ]
 }

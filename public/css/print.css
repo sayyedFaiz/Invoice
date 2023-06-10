@@ -3,24 +3,22 @@
 * {
   font-family: "Inter", sans-serif;
 }
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
 .Company-Title {
   font-weight: 800;
   font-size: 30px;
   letter-spacing: 0.03em;
 }
+
+.contact-details {
+  top: 60px;
+}
 .container{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-.contact-details {
-  top: 60px;
+  justify-content:space-evenly;
+  position: relative;
+  /* background-color: red; */
+  height: 100vh !important;
 }
 
 .phone-number,
@@ -45,27 +43,27 @@ input::-webkit-inner-spin-button {
   right: 0;
   width: fit-content;
 }
-.bankDetails{
-  font-size: 1.2rem ;
+.bankDetails {
+  font-size: 1.2rem;
 }
 
-.companyAddress-container{
+.companyAddress-container {
   background-color: #2125297e;
   border-radius: 100px;
-
 }
-@media print {
-  /* .table-dark {
-    background: #212529 !important;
-  } */
-  .dateInvoice{
-    display: block !important;
-  }
-  .footer{
-    display: flex !important;
-  }
-  th,td{
-    font-size: 12px !important;
-  }
 
+.dateInvoice {
+  display: block !important;
+}
+/* .footer {
+  position: absolute;
+  bottom: 0;
+} */
+th,
+td {
+  font-size: 12px !important;
+}
+
+.invoiceForm{
+    display: none;
 }
