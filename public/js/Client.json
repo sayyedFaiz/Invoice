@@ -25,6 +25,14 @@
             "GSTValue":9,
             "GST":"CGST"
 
+        },
+        {
+            "Name":"Epoxy coating India",
+            "Address": "23-C, 4th street, pullianthrope, Chennai-600012",
+            "GSTNumber":"GST: 33AAFPJ9278A1ZU",
+            "TransportName": "Transport Name: Mahaveer Transport(27AAMFM6323J1ZZ)",
+            "GSTValue":18,
+            "GST":"IGST"
         }
     ]
 }
