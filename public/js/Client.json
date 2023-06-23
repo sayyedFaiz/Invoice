@@ -33,6 +33,14 @@
             "TransportName": "Transport Name: Mahaveer Transport(27AAMFM6323J1ZZ)",
             "GSTValue":18,
             "GST":"IGST"
+        },
+        {
+            "Name":"Polo Hardware",
+            "Address": "R.N.13, 1st Floor, Kasturi Udyog Building, Bhayander(East)",
+            "GSTNumber":"GST: 27ABBPS4166K1ZA",
+            "TransportName": "",
+            "GSTValue":9,
+            "GST":"CGST"
         }
     ]
 }
