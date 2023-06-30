@@ -7,8 +7,8 @@ var deleteButton = document.querySelector(".btn-delete");
 var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 var products = [];
-const lastInvoiceNumber = localStorage.getItem('InvoiceNumber');
-document.querySelector('.lastInvoiceNumber').innerHTML = lastInvoiceNumber
+const lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
+document.querySelector(".lastInvoiceNumber").innerHTML = lastInvoiceNumber;
 addButton.addEventListener("click", (e) => {
   if (form.checkValidity()) {
     updateProducts();
@@ -57,13 +57,10 @@ function updateProducts() {
 }
 
 function calculateTotal() {
-  let tax = document.querySelectorAll(".tax");
-  tax.forEach((el) => {
-    if (el.innerHTML == "-") el.innerHTML = 0;
-  });
-  let CGST = document.querySelector(".CGST").innerHTML;
-  let IGST = document.querySelector(".IGST").innerHTML;
-  let SGST = document.querySelector(".SGST").innerHTML;
+  let taxes = getGST();
+  let CGST = taxes[0];
+  let SGST = taxes[1];
+  let IGST = taxes[2];
   let grandTotal = 0;
   let roundOff = 0;
   products.forEach((product) => {
@@ -71,6 +68,9 @@ function calculateTotal() {
   });
   console.log("Before :", grandTotal);
   document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
+  document.querySelector('.CGST').innerHTML = (grandTotal * parseFloat(CGST)) / 100
+  document.querySelector('.SGST').innerHTML = (grandTotal * parseFloat(SGST)) / 100
+  document.querySelector('.IGST').innerHTML = (grandTotal * parseFloat(IGST)) / 100
   grandTotal =
     grandTotal +
     (grandTotal * parseFloat(IGST)) / 100 +
@@ -87,22 +87,22 @@ clientName.addEventListener("change", (e) => {
   var CGST, SGST, IGST;
   clientList.clientList.forEach((client) => {
     if (client.Name == e.target.value) {
-      let GST = parseFloat(client.GSTValue);
-      if (Object.values(client).includes("CGST")) {
-        document.querySelector(`.SGST`).innerHTML = `${GST}%`;
-        document.querySelector(`.CGST`).innerHTML = `${GST}%`;
-        document.querySelector(`.IGST`).innerHTML = "-";
-        CGST = 9;
-        SGST = 9;
-        IGST = 0;
-      } else {
-        document.querySelector(`.${client.GST}`).innerHTML = `${GST}%`;
-        document.querySelector(`.SGST`).innerHTML = "-";
-        document.querySelector(`.CGST`).innerHTML = "-";
-        IGST = 18;
-        CGST = 0;
-        SGST = 0;
-      }
+      // let GST = parseFloat(client.GSTValue);
+      // if (Object.values(client).includes("CGST")) {
+      //   document.querySelector(`.SGST`).innerHTML = `${GST}%`;
+      //   document.querySelector(`.CGST`).innerHTML = `${GST}%`;
+      //   document.querySelector(`.IGST`).innerHTML = "-";
+      //   CGST = 9;
+      //   SGST = 9;
+      //   IGST = 0;
+      // } else {
+      //   document.querySelector(`.${client.GST}`).innerHTML = `${GST}%`;
+      //   document.querySelector(`.SGST`).innerHTML = "-";
+      //   document.querySelector(`.CGST`).innerHTML = "-";
+      //   IGST = 18;
+      //   CGST = 0;
+      //   SGST = 0;
+      // }
       document.querySelector(".client__Company-Name").innerHTML = client.Name;
       document.querySelector(".client__GST-number").innerHTML =
         client.GSTNumber;
@@ -136,3 +136,23 @@ submitButton.addEventListener("click", () => {
   const element = document.getElementById("print"); // Replace with the ID of the element you want to convert to PDF
   // html2pdf().from(element).save();
 });
+
+function getGST() {
+  var CGST, SGST, IGST;
+  clientList.clientList.forEach((client) => {
+    if (
+      client.Name == document.querySelector(".client__Company-Name").innerHTML
+    ) {
+      if (Object.values(client).includes("CGST")) {
+        CGST = parseFloat(client.GSTValue);
+        SGST = parseFloat(client.GSTValue);
+        IGST = 0;
+      } else {
+        CGST = 0;
+        SGST = 0;
+        IGST = parseFloat(client.GSTValue);
+      }
+    }
+  });
+  return [CGST, SGST, IGST];
+}
