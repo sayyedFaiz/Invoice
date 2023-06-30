@@ -87,22 +87,6 @@ clientName.addEventListener("change", (e) => {
   var CGST, SGST, IGST;
   clientList.clientList.forEach((client) => {
     if (client.Name == e.target.value) {
-      // let GST = parseFloat(client.GSTValue);
-      // if (Object.values(client).includes("CGST")) {
-      //   document.querySelector(`.SGST`).innerHTML = `${GST}%`;
-      //   document.querySelector(`.CGST`).innerHTML = `${GST}%`;
-      //   document.querySelector(`.IGST`).innerHTML = "-";
-      //   CGST = 9;
-      //   SGST = 9;
-      //   IGST = 0;
-      // } else {
-      //   document.querySelector(`.${client.GST}`).innerHTML = `${GST}%`;
-      //   document.querySelector(`.SGST`).innerHTML = "-";
-      //   document.querySelector(`.CGST`).innerHTML = "-";
-      //   IGST = 18;
-      //   CGST = 0;
-      //   SGST = 0;
-      // }
       document.querySelector(".client__Company-Name").innerHTML = client.Name;
       document.querySelector(".client__GST-number").innerHTML =
         client.GSTNumber;
