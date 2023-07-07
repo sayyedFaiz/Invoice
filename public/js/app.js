@@ -50,7 +50,7 @@ function updateProducts() {
     <td>${productPrice.toFixed(2)}</td>
     <td>${productAmount.toFixed(2)}</td>
   </tr>`;
-  if (products.length <= 7) {
+  if (products.length <= 10) {
     productTable.insertAdjacentHTML("beforeend", item);
     calculateTotal();
   }

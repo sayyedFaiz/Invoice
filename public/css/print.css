@@ -34,11 +34,6 @@
   font-size: 30px;
   text-transform: uppercase;
 }
-
-.client-details {
-  width: 60%;
-}
-
 .dateInvoice {
   right: 0;
   width: fit-content;

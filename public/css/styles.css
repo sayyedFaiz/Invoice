@@ -33,13 +33,10 @@ input::-webkit-inner-spin-button {
 
 .invoice {
   font-weight: 800;
-  font-size: 30px;
+  font-size: 25px;
   text-transform: uppercase;
 }
 
-.client-details {
-  width: 60%;
-}
 
 .dateInvoice {
   right: 0;
