@@ -29,7 +29,6 @@ deleteButton.addEventListener("click", () => {
 });
 function updateProducts() {
   const data = Object.fromEntries(new FormData(form).entries());
-  console.log("data:", data);
   let productQuantity = parseFloat(data.Quantity);
   let productPrice = parseFloat(data.Price);
   let productAmount = productQuantity * productPrice;
@@ -43,7 +42,6 @@ function updateProducts() {
     Price: productPrice,
     Amount: productAmount,
   });
-  console.log(products[0].date);
   let item = `  <tr>
     <td>${products.length}</td>
     <td>${products[0].ProductName}</td>
@@ -116,8 +114,7 @@ function print() {
   InvoiceField.innerHTML = products[0].InvoiceNumber;
   localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
   const formattedDate = new Date(products[0].date).toLocaleDateString("en-US");
-  console.log("formattedDate:",formattedDate)
-  dateField.innerHTML = products[0].date;
+  dateField.innerHTML = formattedDate;
 }
 
 submitButton.addEventListener("click", () => {
