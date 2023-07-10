@@ -29,6 +29,7 @@ deleteButton.addEventListener("click", () => {
 });
 function updateProducts() {
   const data = Object.fromEntries(new FormData(form).entries());
+  console.log("data:", data);
   let productQuantity = parseFloat(data.Quantity);
   let productPrice = parseFloat(data.Price);
   let productAmount = productQuantity * productPrice;
@@ -42,6 +43,7 @@ function updateProducts() {
     Price: productPrice,
     Amount: productAmount,
   });
+  console.log(products[0].date);
   let item = `  <tr>
     <td>${products.length}</td>
     <td>${products[0].ProductName}</td>
@@ -68,9 +70,12 @@ function calculateTotal() {
   });
   console.log("Before :", grandTotal);
   document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
-  document.querySelector('.CGST').innerHTML = (grandTotal * parseFloat(CGST)) / 100
-  document.querySelector('.SGST').innerHTML = (grandTotal * parseFloat(SGST)) / 100
-  document.querySelector('.IGST').innerHTML = (grandTotal * parseFloat(IGST)) / 100
+  document.querySelector(".CGST").innerHTML =
+    (grandTotal * parseFloat(CGST)) / 100;
+  document.querySelector(".SGST").innerHTML =
+    (grandTotal * parseFloat(SGST)) / 100;
+  document.querySelector(".IGST").innerHTML =
+    (grandTotal * parseFloat(IGST)) / 100;
   grandTotal =
     grandTotal +
     (grandTotal * parseFloat(IGST)) / 100 +
@@ -110,7 +115,8 @@ function print() {
   let InvoiceField = document.querySelector(".Invoice");
   InvoiceField.innerHTML = products[0].InvoiceNumber;
   localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
-
+  const formattedDate = new Date(products[0].date).toLocaleDateString("en-US");
+  console.log("formattedDate:",formattedDate)
   dateField.innerHTML = products[0].date;
 }
 
