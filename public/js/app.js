@@ -113,7 +113,7 @@ function print() {
   let InvoiceField = document.querySelector(".Invoice");
   InvoiceField.innerHTML = products[0].InvoiceNumber;
   localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
-  const formattedDate = new Date(products[0].date).toLocaleDateString("en-US");
+  const formattedDate = new Date(products[0].date).toLocaleDateString("en-GB");
   dateField.innerHTML = formattedDate;
 }
 
