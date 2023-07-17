@@ -58,6 +58,7 @@ function updateProducts() {
 
 function calculateTotal() {
   let taxes = getGST();
+  console.log(taxes)
   let CGST = taxes[0];
   let SGST = taxes[1];
   let IGST = taxes[2];
@@ -141,5 +142,6 @@ function getGST() {
       }
     }
   });
+  console.log(document.querySelector(".client__Company-Name").innerHTML)
   return [CGST, SGST, IGST];
 }
