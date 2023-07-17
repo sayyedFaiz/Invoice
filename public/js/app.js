@@ -120,8 +120,6 @@ function print() {
 submitButton.addEventListener("click", () => {
   print();
   window.print();
-  const element = document.getElementById("print"); // Replace with the ID of the element you want to convert to PDF
-  // html2pdf().from(element).save();
 });
 
 function getGST() {
@@ -143,3 +141,15 @@ function getGST() {
   });
   return [CGST, SGST, IGST];
 }
+
+var generatePDFButton = document.querySelector('.generatePDF')
+
+generatePDFButton.addEventListener('click',()=>{
+  var element = document.getElementById('element-to-print');
+  var opt = {
+    filename: 'Invoice.pdf',
+    html2canvas: {useCORS: true},
+};
+
+html2pdf(element, opt);
+})

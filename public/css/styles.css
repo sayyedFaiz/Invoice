@@ -51,18 +51,3 @@ input::-webkit-inner-spin-button {
   border-radius: 100px;
 
 }
-@media print {
-  /* .table-dark {
-    background: #212529 !important;
-  } */
-  .dateInvoice{
-    display: block !important;
-  }
-  .footer{
-    display: flex !important;
-  }
-  th,td{
-    font-size: 12px !important;
-  }
-
-}

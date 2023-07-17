@@ -6,24 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="stylesheet" href="/css/print.css" media="print">
+    <!-- <link rel="stylesheet" href="/css/styles.css" /> -->
+    <link rel="stylesheet" href="/css/print.css" />
 
     <title>Invoice</title>
   </head>
 
   <body id="element-to-print">
-    <div class="container h-100 " id="print">
+    <div class="container h-100" id="print">
       <%- include('./template/header') %>
       <form class="invoiceForm needs-validation d-print-none">
-        <div class="row ">
+        <div class="row">
           <div class="col-md-auto InvoiceNumber-container">
             <label for="InvoiceNumber" class="form-label-InvoiceNumber"
               >Invoice No.</label
             >
-            <label class=" mx-3 form-label text-secondary"
-              >Last Bill No. <span class="lastInvoiceNumber"></span></label
-            >
+            <label class="mx-3 form-label text-secondary"
+              >Last Bill No. <span class="lastInvoiceNumber"></span
+            ></label>
             <input
               type="number"
               class="form-control InvoiceNumber-Input"
@@ -46,10 +46,7 @@
         <div class="row">
           <div class="col-md-5 mt-3">
             <select class="form-select Client-company-name" name="Company Name">
-              <option>Company Name</option>
-              <% clientList.forEach((client)=>{ %>
-              <option class="clientList"><%= client.Name %></option>
-              <% }); %>
+
             </select>
           </div>
         </div>
@@ -126,6 +123,11 @@
         </div>
       </form>
       <%- include('./template/table') %> <%- include('./template/footer') %>
+      <div class="row">
+        <div class="col text-center">
+            <button class="btn btn-primary generatePDF">Print</button>
+        </div>
+      </div>
     </div>
     <!-- Bootstrap  -->
     <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

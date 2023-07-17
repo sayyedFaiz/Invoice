@@ -11,6 +11,9 @@ app.use(express.static(path.join(__dirname, "node_modules")));
 app.get("/", (req, res) => {
   res.render("index", { clientList: clientList.clientList });
 });
+app.get("/print", (req, res) => {
+  res.render("print");
+});
 app.listen(port, () => {
   console.log(` app listening on port ${port}`);
 });

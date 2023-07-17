@@ -15,9 +15,8 @@
 .container{
   display: flex;
   flex-direction: column;
-  justify-content:space-evenly;
+  justify-content: space-between;
   position: relative;
-  /* background-color: red; */
   height: 100vh !important;
 }
 
@@ -47,13 +46,6 @@
   border-radius: 100px;
 }
 
-.dateInvoice {
-  display: block !important;
-}
-/* .footer {
-  position: absolute;
-  bottom: 0;
-} */
 th,
 td {
   font-size: 12px !important;
@@ -61,4 +53,11 @@ td {
 
 .invoiceForm{
     display: none;
+}
+
+.dateInvoice{
+  display: block !important;
+}
+.footer{
+  display: flex !important;
 }
