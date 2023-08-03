@@ -21,7 +21,8 @@ addButton.addEventListener("click", (e) => {
 });
 deleteButton.addEventListener("click", () => {
   if (products.length) {
-    products.pop();
+    products = products.slice(1);
+    console.log("after delete",products)
     productTable.lastElementChild.remove();
     calculateTotal();
     clearInputFields();
@@ -64,6 +65,7 @@ function calculateTotal() {
   let IGST = taxes[2];
   let grandTotal = 0;
   let roundOff = 0;
+  console.log("calculate products:",products)
   products.forEach((product) => {
     grandTotal = grandTotal + product.Amount;
   });
@@ -144,14 +146,14 @@ function getGST() {
   return [CGST, SGST, IGST];
 }
 
-var generatePDFButton = document.querySelector('.generatePDF')
+// var generatePDFButton = document.querySelector('.generatePDF')
 
-generatePDFButton.addEventListener('click',()=>{
-  var element = document.getElementById('element-to-print');
-  var opt = {
-    filename: 'Invoice.pdf',
-    html2canvas: {useCORS: true},
-};
+// generatePDFButton.addEventListener('click',()=>{
+//   var element = document.getElementById('element-to-print');
+//   var opt = {
+//     filename: 'Invoice.pdf',
+//     html2canvas: {useCORS: true},
+// };
 
-html2pdf(element, opt);
-})
+// html2pdf(element, opt);
+// })
