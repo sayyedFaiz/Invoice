@@ -51,3 +51,8 @@ input::-webkit-inner-spin-button {
   border-radius: 100px;
 
 }
+
+td{
+  text-transform: capitalize !important;
+
+}
