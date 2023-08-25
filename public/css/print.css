@@ -49,6 +49,7 @@
 th,
 td {
   font-size: 12px !important;
+  text-transform: capitalize;
 }
 
 .invoiceForm{
