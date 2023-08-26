@@ -115,7 +115,11 @@ function print() {
   let dateField = document.querySelector(".Date");
   let InvoiceField = document.querySelector(".Invoice");
   InvoiceField.innerHTML = products[0].InvoiceNumber;
-  localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
+  let lastInvoiceNumber = localStorage.getItem("InvoiceNumber")
+  if (products[0].InvoiceNumber > lastInvoiceNumber){
+    localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
+    console.log(lastInvoiceNumber)
+  }
   const formattedDate = new Date(products[0].date).toLocaleDateString("en-GB");
   dateField.innerHTML = formattedDate;
 }
