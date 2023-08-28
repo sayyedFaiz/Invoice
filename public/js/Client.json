@@ -55,6 +55,14 @@
             "TransportName": "",
             "GSTValue": 9,
             "GST": "CGST"
+        },
+        {
+            "Name": "Tanay Enterprises",
+            "Address": "Flat No 202, New Asmita Co. Op. HSG. SOC. LTD. Bakery Galli Siddhivinayak Marg, Bhayander ",
+            "GSTNumber": "GST: 27APUPM0009A1Z7",
+            "TransportName": "",
+            "GSTValue": 9,
+            "GST": "CGST"
         }
     ]
 }
