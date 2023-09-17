@@ -63,6 +63,14 @@
             "TransportName": "",
             "GSTValue": 9,
             "GST": "CGST"
+        },
+        {
+            "Name": "RajLaxmi Steel Industries",
+            "Address": "Shop no 4, Ravi Estate, Opposite Ajay Estate, Gujrat Botling Road, Rakhial, Ahmedabad, Gujrat-380023",
+            "GSTNumber": "GST: 24AMOPB6667L1ZL",
+            "TransportName": "",
+            "GSTValue": 18,
+            "GST": "IGST"
         }
     ]
 }
