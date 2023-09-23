@@ -71,6 +71,14 @@
             "TransportName": "",
             "GSTValue": 18,
             "GST": "IGST"
+        },
+        {
+            "Name": "Bhalaria Metal Craft Pvt. Ltd.",
+            "Address": "Plot J/K, Bhalaria Industrial Premises Co-op. Soc. Ltd., Radha Swami Satsang Road, Bhayander (West) 401101, Thane",
+            "GSTNumber": "GST: 27AAACB1703A1ZL",
+            "TransportName": "",
+            "GSTValue": 9,
+            "GST": "CGST"
         }
     ]
 }
