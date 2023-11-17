@@ -79,6 +79,14 @@
             "TransportName": "",
             "GSTValue": 9,
             "GST": "CGST"
+        },
+        {
+            "Name": "SR Industries",
+            "Address": "C/312, Ratan Apartment, Near BMC Garden, Jogeshwari(E), Mumbai",
+            "GSTNumber": "GST: 27AGFPM0181R1ZX",
+            "TransportName": "",
+            "GSTValue": 9,
+            "GST": "CGST"
         }
     ]
 }
