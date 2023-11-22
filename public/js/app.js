@@ -1,5 +1,4 @@
 import clientList from "./Client.json" assert { type: "json" };
-
 var form = document.querySelector(".invoiceForm");
 var addButton = document.querySelector(".btn-add");
 var submitButton = document.querySelector(".submitButton");
@@ -22,7 +21,7 @@ addButton.addEventListener("click", (e) => {
 deleteButton.addEventListener("click", () => {
   if (products.length) {
     products = products.slice(1);
-    console.log("after delete",products)
+    console.log("after delete", products);
     productTable.lastElementChild.remove();
     calculateTotal();
     clearInputFields();
@@ -59,13 +58,13 @@ function updateProducts() {
 
 function calculateTotal() {
   let taxes = getGST();
-  console.log(taxes)
+  console.log(taxes);
   let CGST = taxes[0];
   let SGST = taxes[1];
   let IGST = taxes[2];
   let grandTotal = 0;
   let roundOff = 0;
-  console.log("calculate products:",products)
+  console.log("calculate products:", products);
   products.forEach((product) => {
     grandTotal = grandTotal + product.Amount;
   });
@@ -115,49 +114,40 @@ function print() {
   let dateField = document.querySelector(".Date");
   let InvoiceField = document.querySelector(".Invoice");
   InvoiceField.innerHTML = products[0].InvoiceNumber;
-  let lastInvoiceNumber = localStorage.getItem("InvoiceNumber")
-  if (products[0].InvoiceNumber > lastInvoiceNumber){
+  let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
+  if (products[0].InvoiceNumber > lastInvoiceNumber) {
     localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
-    console.log(lastInvoiceNumber)
+    // console.log(lastInvoiceNumber);
   }
   const formattedDate = new Date(products[0].date).toLocaleDateString("en-GB");
   dateField.innerHTML = formattedDate;
 }
 
-submitButton.addEventListener("click", () => {
-  print();
-  window.print();
-});
 
 function getGST() {
   var CGST, SGST, IGST;
   clientList.clientList.forEach((client) => {
     if (
       client.Name == document.querySelector(".client__Company-Name").innerHTML
-    ) {
-      if (Object.values(client).includes("CGST")) {
-        CGST = parseFloat(client.GSTValue);
-        SGST = parseFloat(client.GSTValue);
-        IGST = 0;
-      } else {
-        CGST = 0;
-        SGST = 0;
-        IGST = parseFloat(client.GSTValue);
+      ) {
+        if (Object.values(client).includes("CGST")) {
+          CGST = parseFloat(client.GSTValue);
+          SGST = parseFloat(client.GSTValue);
+          IGST = 0;
+        } else {
+          CGST = 0;
+          SGST = 0;
+          IGST = parseFloat(client.GSTValue);
+        }
       }
-    }
   });
-  console.log(document.querySelector(".client__Company-Name").innerHTML)
+  console.log(document.querySelector(".client__Company-Name").innerHTML);
   return [CGST, SGST, IGST];
 }
 
-// var generatePDFButton = document.querySelector('.generatePDF')
+submitButton.addEventListener("click", () => {
+  print();
+  window.print();
+  console.log("print")
+});
 
-// generatePDFButton.addEventListener('click',()=>{
-//   var element = document.getElementById('element-to-print');
-//   var opt = {
-//     filename: 'Invoice.pdf',
-//     html2canvas: {useCORS: true},
-// };
-
-// html2pdf(element, opt);
-// })
