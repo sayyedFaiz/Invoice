@@ -87,6 +87,14 @@
             "TransportName": "",
             "GSTValue": 9,
             "GST": "CGST"
+        },
+        {
+            "Name": "Mehta Brothers",
+            "Address": "1/1, Ramanlal Chawal, Jambali Gali, Borivali - West, Mumbai - 400092",
+            "GSTNumber": "GST: 27AABPM8164E1ZP",
+            "TransportName": "",
+            "GSTValue": 9,
+            "GST": "CGST"
         }
     ]
 }
