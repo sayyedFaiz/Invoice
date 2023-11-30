@@ -95,6 +95,14 @@
             "TransportName": "",
             "GSTValue": 9,
             "GST": "CGST"
+        },
+        {
+            "Name": "Altido Corporation",
+            "Address": "B2, Swami Samarth Industrial Estate, BP Cross Road No.05, Bhayander (East), Thane - 401105",
+            "GSTNumber": "GST: 27AGNPJ9295M1ZD",
+            "TransportName": "",
+            "GSTValue": 9,
+            "GST": "CGST"
         }
     ]
 }
