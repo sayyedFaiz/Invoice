@@ -17,11 +17,12 @@ addButton.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
   }
+  // console.log(products)
 });
 deleteButton.addEventListener("click", () => {
   if (products.length) {
     products = products.slice(1);
-    console.log("after delete", products);
+    // console.log("after delete", products);
     productTable.lastElementChild.remove();
     calculateTotal();
     clearInputFields();
@@ -42,14 +43,19 @@ function updateProducts() {
     Price: productPrice,
     Amount: productAmount,
   });
+  console.log(products);
+  if (!products[0].ProductName) {
+    products.length -= 1;
+  }
   let item = `  <tr>
-    <td>${products.length}</td>
-    <td>${products[0].ProductName}</td>
-    <td>${products[0].HSN}</td>
-    <td>${productQuantity}</td>
-    <td>${productPrice.toFixed(2)}</td>
-    <td>${productAmount.toFixed(2)}</td>
-  </tr>`;
+      <td>${products.length}</td>
+      <td>${products[0].ProductName}</td>
+      <td>${products[0].HSN}</td>
+      <td>${productQuantity}</td>
+      <td>${productPrice.toFixed(2)}</td>
+      <td>${productAmount.toFixed(2)}</td>
+    </tr>`;
+
   if (products.length <= 10) {
     productTable.insertAdjacentHTML("beforeend", item);
     calculateTotal();
@@ -58,24 +64,27 @@ function updateProducts() {
 
 function calculateTotal() {
   let taxes = getGST();
-  console.log(taxes);
-  let CGST = taxes[0];
-  let SGST = taxes[1];
-  let IGST = taxes[2];
+  // console.log(taxes);
+  let CGST = parseFloat(taxes[0]);
+  let SGST = parseFloat(taxes[1]);
+  let IGST = parseFloat(taxes[2]);
   let grandTotal = 0;
   let roundOff = 0;
-  console.log("calculate products:", products);
+  // console.log("calculate products:", products);
   products.forEach((product) => {
-    grandTotal = grandTotal + product.Amount;
+    if (product.Amount) {
+      grandTotal = grandTotal + product.Amount;
+      product["total"] = grandTotal;
+    }
   });
   console.log("Before :", grandTotal);
   document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
-  document.querySelector(".CGST").innerHTML =
-    (grandTotal * parseFloat(CGST)) / 100;
-  document.querySelector(".SGST").innerHTML =
-    (grandTotal * parseFloat(SGST)) / 100;
-  document.querySelector(".IGST").innerHTML =
-    (grandTotal * parseFloat(IGST)) / 100;
+  document.querySelector(".CGST").innerHTML = (grandTotal * CGST) / 100;
+  document.querySelector(".SGST").innerHTML = (grandTotal * SGST) / 100;
+  document.querySelector(".IGST").innerHTML = (grandTotal * IGST) / 100;
+  products[0]["CGST"] = (grandTotal * CGST) / 100;
+  products[0]["SGST"] = (grandTotal * SGST) / 100;
+  products[0]["IGST"] = (grandTotal * IGST) / 100;
   grandTotal =
     grandTotal +
     (grandTotal * parseFloat(IGST)) / 100 +
@@ -86,18 +95,23 @@ function calculateTotal() {
   document.querySelector(".grandTotal").innerHTML =
     Math.round(grandTotal).toFixed(2);
   document.querySelector(".roundOff").innerHTML = roundOff;
+  console.log(grandTotal, CGST);
+  products[0]["grandTotal"] = Math.round(grandTotal).toFixed(2);
+  products[0]["roundOff"] = roundOff;
 }
 
 clientName.addEventListener("change", (e) => {
   var CGST, SGST, IGST;
   clientList.clientList.forEach((client) => {
     if (client.Name == e.target.value) {
+      products.pop();
       document.querySelector(".client__Company-Name").innerHTML = client.Name;
       document.querySelector(".client__GST-number").innerHTML =
         client.GSTNumber;
       document.querySelector(".client__address").innerHTML = client.Address;
       document.querySelector(".client__Trasnport-details").innerHTML =
         client.TransportName;
+      products.push(client);
     }
   });
   calculateTotal();
@@ -113,6 +127,7 @@ function clearInputFields() {
 function print() {
   let dateField = document.querySelector(".Date");
   let InvoiceField = document.querySelector(".Invoice");
+
   InvoiceField.innerHTML = products[0].InvoiceNumber;
   let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
   if (products[0].InvoiceNumber > lastInvoiceNumber) {
@@ -123,31 +138,45 @@ function print() {
   dateField.innerHTML = formattedDate;
 }
 
-
 function getGST() {
   var CGST, SGST, IGST;
   clientList.clientList.forEach((client) => {
     if (
       client.Name == document.querySelector(".client__Company-Name").innerHTML
-      ) {
-        if (Object.values(client).includes("CGST")) {
-          CGST = parseFloat(client.GSTValue);
-          SGST = parseFloat(client.GSTValue);
-          IGST = 0;
-        } else {
-          CGST = 0;
-          SGST = 0;
-          IGST = parseFloat(client.GSTValue);
-        }
+    ) {
+      if (Object.values(client).includes("CGST")) {
+        CGST = parseFloat(client.GSTValue);
+        SGST = parseFloat(client.GSTValue);
+        IGST = 0;
+      } else {
+        CGST = 0;
+        SGST = 0;
+        IGST = parseFloat(client.GSTValue);
       }
+    }
   });
   console.log(document.querySelector(".client__Company-Name").innerHTML);
   return [CGST, SGST, IGST];
 }
 
-submitButton.addEventListener("click", () => {
-  print();
-  window.print();
-  console.log("print")
-});
+submitButton.addEventListener("click", async () => {
+  // print();
+  console.log(products);
+  // window.print();
+  // console.log("print")
+  // window.location.href = "/generate-pdf"
+  // Assuming the server endpoint to handle the products data is /send-products
+  const response = await fetch("/send-products", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ products }), // Send the products array as JSON
+  });
 
+  if (response.ok) {
+    console.log("Products sent successfully!");
+  } else {
+    console.error("Failed to send products.");
+  }
+});
