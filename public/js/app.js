@@ -34,29 +34,25 @@ function updateProducts() {
   let productPrice = parseFloat(data.Price);
   let productAmount = productQuantity * productPrice;
   // Set an item in local storage
-  products.unshift({
-    date: data.Date,
-    InvoiceNumber: data.InvoiceNumber,
-    ProductName: data.ProductName,
-    HSN: data.HSN,
-    Quantity: productQuantity,
-    Price: productPrice,
-    Amount: productAmount,
-  });
-  console.log(products);
-  if (!products[0].ProductName) {
-    products.length -= 1;
-  }
-  let item = `  <tr>
-      <td>${products.length}</td>
+  if (products.length <= 10) {
+    products.unshift({
+      date: data.Date,
+      InvoiceNumber: data.InvoiceNumber,
+      ProductName: data.ProductName,
+      HSN: data.HSN,
+      Quantity: productQuantity,
+      Price: productPrice,
+      Amount: productAmount,
+    });
+    let item = `
+    <tr>
+      <td>${products.length-1}</td>
       <td>${products[0].ProductName}</td>
       <td>${products[0].HSN}</td>
       <td>${productQuantity}</td>
       <td>${productPrice.toFixed(2)}</td>
       <td>${productAmount.toFixed(2)}</td>
     </tr>`;
-
-  if (products.length <= 10) {
     productTable.insertAdjacentHTML("beforeend", item);
     calculateTotal();
   }
@@ -70,7 +66,7 @@ function calculateTotal() {
   let IGST = parseFloat(taxes[2]);
   let grandTotal = 0;
   let roundOff = 0;
-  // console.log("calculate products:", products);
+  console.log("calculate products:", products);
   products.forEach((product) => {
     if (product.Amount) {
       grandTotal = grandTotal + product.Amount;
@@ -132,7 +128,6 @@ function print() {
   let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
   if (products[0].InvoiceNumber > lastInvoiceNumber) {
     localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
-    // console.log(lastInvoiceNumber);
   }
   const formattedDate = new Date(products[0].date).toLocaleDateString("en-GB");
   dateField.innerHTML = formattedDate;
@@ -160,11 +155,10 @@ function getGST() {
 }
 
 submitButton.addEventListener("click", async () => {
-  // print();
-  console.log(products);
+  print();
+  // console.log(products);
   // window.print();
   // console.log("print")
-  // window.location.href = "/generate-pdf"
   // Assuming the server endpoint to handle the products data is /send-products
   const response = await fetch("/send-products", {
     method: "POST",
@@ -179,4 +173,6 @@ submitButton.addEventListener("click", async () => {
   } else {
     console.error("Failed to send products.");
   }
+    window.location.href = "/print"
+
 });

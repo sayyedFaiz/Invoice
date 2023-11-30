@@ -11,7 +11,19 @@
               <th>Amount</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            <% for (let i = receivedProducts.length - 2; i >= 0 ; i--) { %>
+              <tr>
+                <td><%= receivedProducts.length - i - 1 %></td>
+                <td><%= receivedProducts[i].ProductName %></td>
+                <td><%= receivedProducts[i].HSN %></td>
+                <td><%= receivedProducts[i].Quantity %></td>
+                <td><%= receivedProducts[i].Price %></td>
+                <td><%= receivedProducts[i].Amount %></td>
+              </tr>
+            <% } %>
+
+          </tbody>
           <tfoot>
             <tr>
               <td colspan="4" rowspan="6">
@@ -25,27 +37,27 @@
               </td>
 
               <td class="">Total</td>
-              <td class="totalBeforeTax">-</td>
+              <td class="totalBeforeTax"><%= receivedProducts[0].total %></td>
             </tr>
             <tr>
               <td class="">CGST 9%</td>
-              <td class="CGST tax">-</td>
+              <td class="CGST tax"><%= receivedProducts[0].CGST %></td>
             </tr>
             <tr>
               <td class="">SGST 9%</td>
-              <td class="SGST tax">-</td>
+              <td class="SGST tax"><%= receivedProducts[0].SGST %></td>
             </tr>
             <tr>
               <td class="">IGST 18%</td>
-              <td class="IGST tax">-</td>
+              <td class="IGST tax"><%= receivedProducts[0].IGST %></td>
             </tr>
             <tr>
               <td class="">Round Off</td>
-              <td class="roundOff">-</td>
+              <td class="roundOff"><%= receivedProducts[0].roundOff %></td>
             </tr>
             <tr class="table-dark">
               <td class="">Grand Total</td>
-              <td class="grandTotal ">-</td>
+              <td class="grandTotal "><%= receivedProducts[0].grandTotal %></td>
             </tr>
           </tfoot>
         </table>

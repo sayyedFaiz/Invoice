@@ -15,115 +15,9 @@
   <body id="element-to-print">
     <div class="container h-100" id="print">
       <%- include('./template/header' ) %>
-      <form class="invoiceForm needs-validation d-print-none">
-        <div class="row">
-          <div class="col-md-auto InvoiceNumber-container">
-            <label for="InvoiceNumber" class="form-label-InvoiceNumber"
-              >Invoice No.</label
-            >
-            <label class="mx-3 form-label text-secondary"
-              >Last Bill No. <span class="lastInvoiceNumber"></span
-            ></label>
-            <input
-              type="number"
-              class="form-control InvoiceNumber-Input"
-              name="InvoiceNumber"
-              id="InvoiceNumber"
-              placeholder="Enter Invoice No."
-            />
-          </div>
-          <div class="col-md-auto ms-auto">
-            <label for="Date" class="form-label Date-label">Date:</label>
-            <input
-              type="date"
-              class="form-control Date-Input"
-              id="Date"
-              name="Date"
-              format="dd/mm/yyyy"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-5 mt-3">
-            <select class="form-select Client-company-name" name="Company Name">
-
-            </select>
-          </div>
-        </div>
-        <div class="row my-3">
-          <div class="col">
-            <label for="ProductName" class="form-label d-print-none"
-              >Product Name</label
-            >
-            <input
-              type="text"
-              class="form-control d-print-none productData"
-              name="ProductName"
-              placeholder="Enter Product Name"
-              required
-            />
-          </div>
-          <div class="col">
-            <label for="HSN" class="form-label d-print-none">HSN</label>
-            <input
-              type="number"
-              class="form-control d-print-none productData"
-              min="0"
-              name="HSN"
-              placeholder="Enter HSN No."
-            />
-          </div>
-          <div class="col">
-            <label for="Quantity" class="form-label d-print-none"
-              >Quantity</label
-            >
-            <input
-              type="number"
-              class="form-control d-print-none productData"
-              min="0"
-              name="Quantity"
-              placeholder="Enter Quantity"
-              required
-            />
-          </div>
-          <div class="col">
-            <label for="Price" class="form-label d-print-none">Rate</label>
-            <input
-              type="number"
-              class="form-control d-print-none productData"
-              step="any"
-              min="0"
-              name="Price"
-              placeholder="Enter Price"
-              required
-            />
-          </div>
-        </div>
-        <div class="my-3 d-flex justify-content-end">
-          <button
-            type="button"
-            class="btn btn-outline-info btn-add d-print-none mx-3"
-          >
-            Add
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-danger btn-delete d-print-none"
-          >
-            Delete
-          </button>
-        </div>
-        <div class="my-3">
-          <button
-            type="button"
-            class="btn btn-primary submitButton d-print-none"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
-      <%- include('./template/table') %> <%- include('./template/footer') %>
-      <div class="row">
+      <%- include('./template/table') %>
+      <%- include('./template/footer') %>
+      <div class="row d-print-none">
         <div class="col text-center">
             <button class="btn btn-primary generatePDF">Print</button>
         </div>
@@ -132,7 +26,7 @@
     <!-- Bootstrap  -->
     <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- CUSTOM  -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script type="module" src="/js/print.js"></script>
     <script type="module" src="/js/app.js"></script>
   </body>
 </html>

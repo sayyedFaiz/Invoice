@@ -21,22 +21,20 @@
     <h3 class="invoice">invoice</h3>
   </div>
 </div>
-<div class="row position-relative">
-    <% receivedProducts.forEach((Product)=>{ %>
+<div class="row">
   <div class="col">
     <div class="client-details-container d-flex flex-column">
       <span class="receiver">To</span>
-      <div class="client__Company-Name fw-bold fs-4"><%= Product.Name %></div>
-      <div class="client__GST-number"><%= Product.GSTNumber %></div>
-      <div class="client__address"><%= Product.Address %></div>
+      <div class="client__Company-Name fw-bold fs-4"><%= receivedProducts[receivedProducts.length -1 ].Name %></div>
+      <div class="client__GST-number"><%= receivedProducts[receivedProducts.length -1 ].GSTNumber %></div>
+      <div class="client__address"><%=receivedProducts[receivedProducts.length -1 ].Address %></div>
       <div class="client__Trasnport-details fw-bold fs-7">
-        <%= Product.TransportName %>
+        <%= receivedProducts[receivedProducts.length -1 ].TransportName %>
       </div>
     </div>
   </div>
   <div class="dateInvoice position-absolute d-none">
-    <div>Date: <span class="Date"></span></div>
-    <div>Invoice No: <span class="Invoice"></span></div>
+    <div>Date: <span class="Date"><%= receivedProducts[0].date %></span></div>
+    <div>Invoice No: <span class="Invoice"><%= receivedProducts[0].InvoiceNumber %></span></div>
   </div>
-  <% }); %>
 </div>

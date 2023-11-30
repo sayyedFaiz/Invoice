@@ -1,6 +1,9 @@
 const express = require("express");
 const puppeteer = require('puppeteer');
 const path = require("path");
+
+const ejs = require('ejs');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const clientList = require("./public/js/Client.json");
 const app = express();
@@ -38,31 +41,4 @@ app.listen(port, () => {
 });
 
 
-// Function to generate PDF using html2pdf.js
-async function generatePDF(htmlContent, fileName) {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-
-  await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
-
-  const pdf = await page.pdf({ format: 'A4', path: fileName });
-
-  await browser.close();
-  return pdf;
-}
-
-// Route to generate and download PDF
-app.get('/generate-pdf', async (req, res) => {
-  try {
-    const htmlContent = '<html><body><h1>Hello, PDF!</h1></body></html>'; // Replace this with your HTML content
-
-    const pdf = await generatePDF(htmlContent, 'output.pdf');
-
-    res.contentType('application/pdf');
-    res.send(pdf);
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-    res.status(500).send('Error generating PDF');
-  }
-});
 
