@@ -72,11 +72,11 @@ function calculateTotal() {
   console.log("Before :", grandTotal);
   document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
   document.querySelector(".CGST").innerHTML =
-    (grandTotal * parseFloat(CGST)) / 100;
+    ((grandTotal * parseFloat(CGST)) / 100).toFixed(2);
   document.querySelector(".SGST").innerHTML =
-    (grandTotal * parseFloat(SGST)) / 100;
+    ((grandTotal * parseFloat(SGST)) / 100).toFixed(2);
   document.querySelector(".IGST").innerHTML =
-    (grandTotal * parseFloat(IGST)) / 100;
+    ((grandTotal * parseFloat(IGST)) / 100).toFixed(2);
   grandTotal =
     grandTotal +
     (grandTotal * parseFloat(IGST)) / 100 +
@@ -150,14 +150,3 @@ function getGST() {
   return [CGST, SGST, IGST];
 }
 
-// var generatePDFButton = document.querySelector('.generatePDF')
-
-// generatePDFButton.addEventListener('click',()=>{
-//   var element = document.getElementById('element-to-print');
-//   var opt = {
-//     filename: 'Invoice.pdf',
-//     html2canvas: {useCORS: true},
-// };
-
-// html2pdf(element, opt);
-// })
