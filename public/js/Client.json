@@ -103,6 +103,14 @@
             "TransportName": "",
             "GSTValue": 9,
             "GST": "CGST"
+        },
+        {
+            "Name": "Ganesh Metal",
+            "Address": "Sorath Estate, Near kanta Gas godown, Dhebar road, Atika, Rajkot,Gujarat, 360002",
+            "GSTNumber": "GST: 24AUEPD4321P1ZQ",
+            "TransportName": "",
+            "GSTValue": 18,
+            "GST": "IGST"
         }
     ]
 }
