@@ -1,6 +1,7 @@
 const express = require("express");
 const puppeteer = require('puppeteer');
 const path = require("path");
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const clientList = require("./public/js/Client.json");
 const app = express();
@@ -30,18 +31,32 @@ app.get("/print", (req, res) => {
   res.render("print", {receivedProducts});
 });
 app.get('/download-invoice', async (req, res) => {
-  const browser = await puppeteer.launch({headless: "new"});
-  const page = await browser.newPage();
-  await page.goto('http://localhost:3000/print', { waitUntil: 'networkidle0' });
-  const pdf = await page.pdf({ format: 'A4',  printBackground: true, margin : 'none',
-  preferCSSPageSize: true  });
+  try {
+    const browser = await puppeteer.launch({ headless: "new" });
+    const page = await browser.newPage();
+    // Replace with the full URL of your server when deployed
+    await page.goto(`${process.env.SERVER_URL}/print`, { waitUntil: 'networkidle0' });
+    const pdf = await page.pdf({ format: 'A4', printBackground: true, margin: 'none', preferCSSPageSize: true });
 
-  await browser.close();
-  let fileName = `${(receivedProducts[receivedProducts.length - 1].Name).trim()}${date}`
-  res.setHeader('Content-Disposition', `attachment; filename=${fileName}.pdf`);
-  res.contentType("application/pdf");
-  // Send the buffer as a response to download
-  res.send(pdf);
+    await browser.close();
+
+    // Ensure that receivedProducts is defined and has the required properties
+    let fileName = `Invoice-${new Date().toISOString()}`;
+    if (receivedProducts && receivedProducts.length > 0) {
+      const productName = receivedProducts[receivedProducts.length - 1].Name.trim();
+      fileName = `${productName}-${new Date().toISOString()}`;
+    }
+
+    // Sanitize the file name to remove unwanted characters
+    fileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '');
+
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.pdf`);
+    res.contentType("application/pdf");
+    res.send(pdf);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error generating invoice');
+  }
 });
 
 app.listen(port, () => {
