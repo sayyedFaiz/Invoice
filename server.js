@@ -1,13 +1,11 @@
 const express = require("express");
 const puppeteer = require('puppeteer');
 const path = require("path");
-
-const ejs = require('ejs');
-const fs = require('fs');
 const bodyParser = require('body-parser');
 const clientList = require("./public/js/Client.json");
 const app = express();
 let receivedProducts = []
+const date =  new Date().toJSON().slice(0, 10);
 const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
@@ -23,10 +21,6 @@ app.get("/", (req, res) => {
 // Handle the POST request to receive the products data
 app.post('/send-products', (req, res) => {
    receivedProducts = req.body.products; // Get the products array from the request
-  // Handle the received products here in your server-side logic
-  console.log('Received products:', receivedProducts);
-  // Perform operations or save to a database, etc.
-
   // Send a response back to the client
   res.status(200).send('Products received on the server.');
 });
@@ -34,6 +28,20 @@ app.post('/send-products', (req, res) => {
 
 app.get("/print", (req, res) => {
   res.render("print", {receivedProducts});
+});
+app.get('/download-invoice', async (req, res) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('http://localhost:3000/print', { waitUntil: 'networkidle0' });
+  const pdf = await page.pdf({ format: 'A4',  printBackground: true, margin : 'none',
+  preferCSSPageSize: true  });
+
+  await browser.close();
+  let fileName = `${(receivedProducts[receivedProducts.length - 1].Name).trim()}${date}`
+  res.setHeader('Content-Disposition', `attachment; filename=${fileName}.pdf`);
+  res.contentType("application/pdf");
+  // Send the buffer as a response to download
+  res.send(pdf);
 });
 
 app.listen(port, () => {

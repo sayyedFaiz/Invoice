@@ -17,7 +17,6 @@ addButton.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
   }
-  // console.log(products)
 });
 deleteButton.addEventListener("click", () => {
   if (products.length) {
@@ -60,7 +59,6 @@ function updateProducts() {
 
 function calculateTotal() {
   let taxes = getGST();
-  // console.log(taxes);
   let CGST = parseFloat(taxes[0]);
   let SGST = parseFloat(taxes[1]);
   let IGST = parseFloat(taxes[2]);
@@ -156,10 +154,6 @@ function getGST() {
 
 submitButton.addEventListener("click", async () => {
   print();
-  // console.log(products);
-  // window.print();
-  // console.log("print")
-  // Assuming the server endpoint to handle the products data is /send-products
   const response = await fetch("/send-products", {
     method: "POST",
     headers: {
@@ -174,5 +168,4 @@ submitButton.addEventListener("click", async () => {
     console.error("Failed to send products.");
   }
     window.location.href = "/print"
-
 });

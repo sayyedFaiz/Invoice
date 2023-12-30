@@ -6,20 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
-    <!-- <link rel="stylesheet" href="/css/styles.css" /> -->
-    <link rel="stylesheet" href="/css/print.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/print.css" media="print"/>
 
     <title>Invoice</title>
   </head>
 
   <body id="element-to-print">
-    <div class="container h-100" id="print">
+    <div class="container" id="print">
       <%- include('./template/header' ) %>
       <%- include('./template/table') %>
       <%- include('./template/footer') %>
-      <div class="row d-print-none">
+      <div class="row d-print-none my-3">
         <div class="col text-center">
             <button class="btn btn-primary generatePDF">Print</button>
+            <button class="btn btn-success downloadPDF">Download</button>
         </div>
       </div>
     </div>
