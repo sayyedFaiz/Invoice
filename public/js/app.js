@@ -1,5 +1,4 @@
 import clientList from "./Client.json" assert { type: "json" };
-
 var form = document.querySelector(".invoiceForm");
 var addButton = document.querySelector(".btn-add");
 var submitButton = document.querySelector(".submitButton");
@@ -22,7 +21,7 @@ addButton.addEventListener("click", (e) => {
 deleteButton.addEventListener("click", () => {
   if (products.length) {
     products = products.slice(1);
-    console.log("after delete",products)
+    // console.log("after delete", products);
     productTable.lastElementChild.remove();
     calculateTotal();
     clearInputFields();
@@ -34,24 +33,25 @@ function updateProducts() {
   let productPrice = parseFloat(data.Price);
   let productAmount = productQuantity * productPrice;
   // Set an item in local storage
-  products.unshift({
-    date: data.Date,
-    InvoiceNumber: data.InvoiceNumber,
-    ProductName: data.ProductName,
-    HSN: data.HSN,
-    Quantity: productQuantity,
-    Price: productPrice,
-    Amount: productAmount,
-  });
-  let item = `  <tr>
-    <td>${products.length}</td>
-    <td>${products[0].ProductName}</td>
-    <td>${products[0].HSN}</td>
-    <td>${productQuantity}</td>
-    <td>${productPrice.toFixed(2)}</td>
-    <td>${productAmount.toFixed(2)}</td>
-  </tr>`;
   if (products.length <= 10) {
+    products.unshift({
+      date: data.Date,
+      InvoiceNumber: data.InvoiceNumber,
+      ProductName: data.ProductName,
+      HSN: data.HSN,
+      Quantity: productQuantity,
+      Price: productPrice,
+      Amount: productAmount,
+    });
+    let item = `
+    <tr>
+      <td>${products.length-1}</td>
+      <td>${products[0].ProductName}</td>
+      <td>${products[0].HSN}</td>
+      <td>${productQuantity}</td>
+      <td>${productPrice.toFixed(2)}</td>
+      <td>${productAmount.toFixed(2)}</td>
+    </tr>`;
     productTable.insertAdjacentHTML("beforeend", item);
     calculateTotal();
   }
@@ -59,24 +59,26 @@ function updateProducts() {
 
 function calculateTotal() {
   let taxes = getGST();
-  console.log(taxes)
-  let CGST = taxes[0];
-  let SGST = taxes[1];
-  let IGST = taxes[2];
+  let CGST = parseFloat(taxes[0]);
+  let SGST = parseFloat(taxes[1]);
+  let IGST = parseFloat(taxes[2]);
   let grandTotal = 0;
   let roundOff = 0;
-  console.log("calculate products:",products)
+  console.log("calculate products:", products);
   products.forEach((product) => {
-    grandTotal = grandTotal + product.Amount;
+    if (product.Amount) {
+      grandTotal = grandTotal + product.Amount;
+      product["total"] = grandTotal;
+    }
   });
   console.log("Before :", grandTotal);
   document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
-  document.querySelector(".CGST").innerHTML =
-    ((grandTotal * parseFloat(CGST)) / 100).toFixed(2);
-  document.querySelector(".SGST").innerHTML =
-    ((grandTotal * parseFloat(SGST)) / 100).toFixed(2);
-  document.querySelector(".IGST").innerHTML =
-    ((grandTotal * parseFloat(IGST)) / 100).toFixed(2);
+  document.querySelector(".CGST").innerHTML = (grandTotal * CGST) / 100;
+  document.querySelector(".SGST").innerHTML = (grandTotal * SGST) / 100;
+  document.querySelector(".IGST").innerHTML = (grandTotal * IGST) / 100;
+  products[0]["CGST"] = (grandTotal * CGST) / 100;
+  products[0]["SGST"] = (grandTotal * SGST) / 100;
+  products[0]["IGST"] = (grandTotal * IGST) / 100;
   grandTotal =
     grandTotal +
     (grandTotal * parseFloat(IGST)) / 100 +
@@ -87,18 +89,23 @@ function calculateTotal() {
   document.querySelector(".grandTotal").innerHTML =
     Math.round(grandTotal).toFixed(2);
   document.querySelector(".roundOff").innerHTML = roundOff;
+  console.log(grandTotal, CGST);
+  products[0]["grandTotal"] = Math.round(grandTotal).toFixed(2);
+  products[0]["roundOff"] = roundOff;
 }
 
 clientName.addEventListener("change", (e) => {
   var CGST, SGST, IGST;
   clientList.clientList.forEach((client) => {
     if (client.Name == e.target.value) {
+      products.pop();
       document.querySelector(".client__Company-Name").innerHTML = client.Name;
       document.querySelector(".client__GST-number").innerHTML =
         client.GSTNumber;
       document.querySelector(".client__address").innerHTML = client.Address;
       document.querySelector(".client__Trasnport-details").innerHTML =
         client.TransportName;
+      products.push(client);
     }
   });
   calculateTotal();
@@ -114,20 +121,15 @@ function clearInputFields() {
 function print() {
   let dateField = document.querySelector(".Date");
   let InvoiceField = document.querySelector(".Invoice");
+
   InvoiceField.innerHTML = products[0].InvoiceNumber;
-  let lastInvoiceNumber = localStorage.getItem("InvoiceNumber")
-  if (products[0].InvoiceNumber > lastInvoiceNumber){
+  let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
+  if (products[0].InvoiceNumber > lastInvoiceNumber) {
     localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
-    console.log(lastInvoiceNumber)
   }
   const formattedDate = new Date(products[0].date).toLocaleDateString("en-GB");
   dateField.innerHTML = formattedDate;
 }
-
-submitButton.addEventListener("click", () => {
-  print();
-  window.print();
-});
 
 function getGST() {
   var CGST, SGST, IGST;
@@ -146,7 +148,24 @@ function getGST() {
       }
     }
   });
-  console.log(document.querySelector(".client__Company-Name").innerHTML)
+  console.log(document.querySelector(".client__Company-Name").innerHTML);
   return [CGST, SGST, IGST];
 }
 
+submitButton.addEventListener("click", async () => {
+  print();
+  const response = await fetch("/send-products", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ products }), // Send the products array as JSON
+  });
+
+  if (response.ok) {
+    console.log("Products sent successfully!");
+  } else {
+    console.error("Failed to send products.");
+  }
+    window.location.href = "/print"
+});

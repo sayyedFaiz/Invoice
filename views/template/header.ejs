@@ -1,38 +1,40 @@
 <div class="row">
-    <div class="col ">
-        <h1 class="Company-Title text-center">SAIYYAD ENGINEERING WORKS</h1>
-        <div class="contact-details d-flex justify-content-center">
-            <div class="phone mx-3 d-flex justify-content-center align-items-center">
-                <img src="/images/fluent_call-32-filled.svg">
-                <p class="phone-number my-0">+91 9867538527</p>
-            </div>
-            <div class="mail d-flex justify-content-center align-items-center">
-                <img src="/images/quill_mail.svg">
-                <p class="mail-address my-0 mx-1">sayyedengworks@gmail.com</p>
-            </div>
-            <div class="GST mx-3 d-flex justify-content-center align-items-center">
-                <p class="GST-number my-0">GST:27AHSPB7715N1ZR</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row ">
-    <div class="col">
-        <h3 class="invoice">invoice</h3>
-    </div>
-</div>
-<div class="row position-relative">
-    <div class="col">
-      <div class="client-details-container d-flex flex-column">
-        <span class="receiver">To</span>
-        <div class="client__Company-Name fw-bold fs-4"></div>
-        <div class="client__GST-number"></div>
-        <div class="client__address "></div>
-        <div class="client__Trasnport-details fw-bold fs-7"></div>
+  <div class="col">
+    <h1 class="Company-Title text-center">SAIYYAD ENGINEERING WORKS</h1>
+    <div class="contact-details d-flex justify-content-center">
+      <div class="phone mx-3 d-flex justify-content-center align-items-center">
+        <img src="/images/fluent_call-32-filled.svg" />
+        <p class="phone-number my-0">+91 9867538527</p>
+      </div>
+      <div class="mail d-flex justify-content-center align-items-center">
+        <img src="/images/quill_mail.svg" />
+        <p class="mail-address my-0 mx-1">sayyedengworks@gmail.com</p>
+      </div>
+      <div class="GST mx-3 d-flex justify-content-center align-items-center">
+        <p class="GST-number my-0">GST:27AHSPB7715N1ZR</p>
       </div>
     </div>
-    <div class="dateInvoice position-absolute d-none">
-      <div>Date: <span class="Date"></span></div>
-      <div >Invoice No: <span class="Invoice"></span></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <h3 class="invoice">invoice</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="client-details-container d-flex flex-column">
+      <span class="receiver">To</span>
+      <div class="client__Company-Name fw-bold fs-4"><%= receivedProducts[receivedProducts.length -1 ].Name %></div>
+      <div class="client__GST-number"><%= receivedProducts[receivedProducts.length -1 ].GSTNumber %></div>
+      <div class="client__address"><%=receivedProducts[receivedProducts.length -1 ].Address %></div>
+      <div class="client__Trasnport-details fw-bold fs-7">
+        <%= receivedProducts[receivedProducts.length -1 ].TransportName %>
+      </div>
     </div>
   </div>
+  <div class="dateInvoice position-absolute d-none">
+    <div>Date: <span class="Date"><%= receivedProducts[0].date %></span></div>
+    <div>Invoice No: <span class="Invoice"><%= receivedProducts[0].InvoiceNumber %></span></div>
+  </div>
+</div>
