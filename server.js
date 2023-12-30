@@ -30,7 +30,7 @@ app.get("/print", (req, res) => {
   res.render("print", {receivedProducts});
 });
 app.get('/download-invoice', async (req, res) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({headless: "new"});
   const page = await browser.newPage();
   await page.goto('http://localhost:3000/print', { waitUntil: 'networkidle0' });
   const pdf = await page.pdf({ format: 'A4',  printBackground: true, margin : 'none',
