@@ -44,11 +44,8 @@ app.get('/download-invoice', async (req, res) => {
     let fileName = `Invoice-${new Date().toISOString()}`;
     if (receivedProducts && receivedProducts.length > 0) {
       const productName = receivedProducts[receivedProducts.length - 1].Name.trim();
-      fileName = `${productName}-${new Date().toISOString()}`;
+      fileName = `${productName}-${date}`;
     }
-
-    // Sanitize the file name to remove unwanted characters
-    fileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '');
 
     res.setHeader('Content-Disposition', `attachment; filename=${fileName}.pdf`);
     res.contentType("application/pdf");
