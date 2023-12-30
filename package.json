@@ -18,7 +18,7 @@
     "html2pdf.js": "^0.10.1",
     "jspdf": "^2.5.1",
     "nodejs": "0.0.0",
-    "puppeteer": "^21.5.2"
+    "puppeteer": "^21.6.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
