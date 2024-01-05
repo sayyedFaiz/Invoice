@@ -26,7 +26,6 @@ app.post('/send-products', (req, res) => {
   res.status(200).send('Products received on the server.');
 });
 
-
 app.get("/print", (req, res) => {
   res.render("print", {receivedProducts});
 });
