@@ -7,7 +7,11 @@ var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 var products = [];
 const lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
-document.querySelector(".lastInvoiceNumber").innerHTML = lastInvoiceNumber;
+console.log(lastInvoiceNumber)
+var lastInvoiceNumberElement = document.querySelector(".lastInvoiceNumber");
+if(lastInvoiceNumber){
+  lastInvoiceNumberElement.innerHTML = lastInvoiceNumber;
+}
 addButton.addEventListener("click", (e) => {
   if (form.checkValidity()) {
     updateProducts();
@@ -118,15 +122,6 @@ function clearInputFields() {
   });
 }
 
-function print() {
-  // let dateField = document.querySelector(".Date");
-  let InvoiceField = document.querySelector(".Invoice");
-  InvoiceField.innerHTML = products[0].InvoiceNumber;
-  let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
-  if (products[0].InvoiceNumber > lastInvoiceNumber) {
-    localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
-  }
-}
 
 function getGST() {
   var CGST, SGST, IGST;
@@ -150,7 +145,7 @@ function getGST() {
 }
 
 submitButton.addEventListener("click", async () => {
-  print();
+  // print();
   const response = await fetch("/send-products", {
     method: "POST",
     headers: {
