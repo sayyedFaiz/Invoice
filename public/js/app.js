@@ -35,7 +35,7 @@ function updateProducts() {
   // Set an item in local storage
   if (products.length <= 10) {
     products.unshift({
-      date: data.Date,
+      date: new Date(data.Date).toLocaleDateString("en-GB"),
       InvoiceNumber: data.InvoiceNumber,
       ProductName: data.ProductName,
       HSN: data.HSN,
@@ -64,14 +64,14 @@ function calculateTotal() {
   let IGST = parseFloat(taxes[2]);
   let grandTotal = 0;
   let roundOff = 0;
-  console.log("calculate products:", products);
+  // console.log("calculate products:", products);
   products.forEach((product) => {
     if (product.Amount) {
       grandTotal = grandTotal + product.Amount;
       product["total"] = grandTotal;
     }
   });
-  console.log("Before :", grandTotal);
+  // console.log("Before :", grandTotal);
   document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
   document.querySelector(".CGST").innerHTML = (grandTotal * CGST) / 100;
   document.querySelector(".SGST").innerHTML = (grandTotal * SGST) / 100;
@@ -84,12 +84,12 @@ function calculateTotal() {
     (grandTotal * parseFloat(IGST)) / 100 +
     (grandTotal * parseFloat(CGST)) / 100 +
     (grandTotal * parseFloat(SGST)) / 100;
-  console.log("After : ", grandTotal);
+  // console.log("After : ", grandTotal);
   roundOff = (Math.round(grandTotal) - grandTotal).toFixed(2);
   document.querySelector(".grandTotal").innerHTML =
     Math.round(grandTotal).toFixed(2);
   document.querySelector(".roundOff").innerHTML = roundOff;
-  console.log(grandTotal, CGST);
+  // console.log(grandTotal, CGST);
   products[0]["grandTotal"] = Math.round(grandTotal).toFixed(2);
   products[0]["roundOff"] = roundOff;
 }
@@ -119,16 +119,13 @@ function clearInputFields() {
 }
 
 function print() {
-  let dateField = document.querySelector(".Date");
+  // let dateField = document.querySelector(".Date");
   let InvoiceField = document.querySelector(".Invoice");
-
   InvoiceField.innerHTML = products[0].InvoiceNumber;
   let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
   if (products[0].InvoiceNumber > lastInvoiceNumber) {
     localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
   }
-  const formattedDate = new Date(products[0].date).toLocaleDateString("en-GB");
-  dateField.innerHTML = formattedDate;
 }
 
 function getGST() {
@@ -148,7 +145,7 @@ function getGST() {
       }
     }
   });
-  console.log(document.querySelector(".client__Company-Name").innerHTML);
+  // console.log(document.querySelector(".client__Company-Name").innerHTML);
   return [CGST, SGST, IGST];
 }
 
