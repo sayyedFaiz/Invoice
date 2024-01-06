@@ -107,14 +107,14 @@ function clearInputFields() {
   });
 }
 
-function print() {
-  let InvoiceField = document.querySelector(".Invoice");
-  InvoiceField.innerHTML = products[0].InvoiceNumber;
-  let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
-  if (products[0].InvoiceNumber > lastInvoiceNumber) {
-    localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
-  }
-}
+// function print() {
+//   let InvoiceField = document.querySelector(".Invoice");
+//   InvoiceField.innerHTML = products[0].InvoiceNumber;
+//   let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
+//   if (products[0].InvoiceNumber > lastInvoiceNumber) {
+//     localStorage.setItem("InvoiceNumber", `${products[0].InvoiceNumber}`);
+//   }
+// }
 
 function getGST() {
   var CGST, SGST, IGST;
@@ -164,7 +164,7 @@ function deleteProducts(){
 
 
 async function submit(){
-  print();
+  // print();
   const response = await fetch("/send-products", {
     method: "POST",
     headers: {
