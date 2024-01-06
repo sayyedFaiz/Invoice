@@ -6,6 +6,8 @@ var deleteButton = document.querySelector(".btn-delete");
 var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 var products = [];
+
+
 const lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
 console.log(lastInvoiceNumber)
 var lastInvoiceNumberElement = document.querySelector(".lastInvoiceNumber");
@@ -66,15 +68,15 @@ function calculateTotal() {
   let CGST = parseFloat(taxes[0]);
   let SGST = parseFloat(taxes[1]);
   let IGST = parseFloat(taxes[2]);
-  let grandTotal = 0;
   let roundOff = 0;
-  // console.log("calculate products:", products);
+  let grandTotal = 0;
   products.forEach((product) => {
     if (product.Amount) {
       grandTotal = grandTotal + product.Amount;
-      product["total"] = grandTotal;
+      products[0]["total"] = grandTotal;
     }
   });
+  console.log("calculate products:", products);
   // console.log("Before :", grandTotal);
   document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
   document.querySelector(".CGST").innerHTML = (grandTotal * CGST) / 100;
