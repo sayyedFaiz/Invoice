@@ -6,29 +6,16 @@ var deleteButton = document.querySelector(".btn-delete");
 var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 var products = [];
-
-
 const lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
 document.querySelector(".lastInvoiceNumber").innerHTML = lastInvoiceNumber;
-addButton.addEventListener("click", (e) => {
-  if (form.checkValidity()) {
-    updateProducts();
-    clearInputFields();
-  } else {
-    form.classList.add("was-validated");
-    e.preventDefault();
-    e.stopPropagation();
-  }
-});
-deleteButton.addEventListener("click", () => {
-  if (products.length) {
-    products = products.slice(1);
-    // console.log("after delete", products);
-    productTable.lastElementChild.remove();
-    calculateTotal();
-    clearInputFields();
-  }
-});
+
+
+addButton.addEventListener("click", (e) => addProducts(e));
+addButton.addEventListener("touchstart", (e) => addProducts(e));
+
+deleteButton.addEventListener("click", () => deleteProducts());
+deleteButton.addEventListener("touchstart", () => deleteProducts());
+
 function updateProducts() {
   const data = Object.fromEntries(new FormData(form).entries());
   let productQuantity = parseFloat(data.Quantity);
@@ -121,7 +108,6 @@ function clearInputFields() {
 }
 
 function print() {
-  // let dateField = document.querySelector(".Date");
   let InvoiceField = document.querySelector(".Invoice");
   InvoiceField.innerHTML = products[0].InvoiceNumber;
   let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
@@ -151,7 +137,33 @@ function getGST() {
   return [CGST, SGST, IGST];
 }
 
-submitButton.addEventListener("click", async () => {
+submitButton.addEventListener("click",  () => submit());
+submitButton.addEventListener("touchStart",  () => submit());
+
+
+function addProducts(e){
+  if (form.checkValidity()) {
+    updateProducts();
+    clearInputFields();
+  } else {
+    form.classList.add("was-validated");
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}
+
+function deleteProducts(){
+  if (products.length) {
+    products = products.slice(1);
+    // console.log("after delete", products);
+    productTable.lastElementChild.remove();
+    calculateTotal();
+    clearInputFields();
+  }
+}
+
+
+async function submit(){
   print();
   const response = await fetch("/send-products", {
     method: "POST",
@@ -167,4 +179,4 @@ submitButton.addEventListener("click", async () => {
     console.error("Failed to send products.");
   }
     window.location.href = "/print"
-});
+}
