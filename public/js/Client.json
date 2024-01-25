@@ -111,6 +111,14 @@
             "TransportName": "",
             "GSTValue": 18,
             "GST": "IGST"
+        },
+        {
+            "Name": "Narayan Engg.co.",
+            "Address": "G/34A, Sonal Industrial Estste, Behind Reliance Energy, Shree Ram Nagar Lane,  Bhayander Phatak Road, Bhayander (East),  Thane-401105",
+            "GSTNumber": "GST: 27ABQPM6148J1Z1",
+            "TransportName": "",
+            "GSTValue": 9,
+            "GST": "CGST"
         }
     ]
 }
