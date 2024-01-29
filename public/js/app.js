@@ -1,4 +1,4 @@
-import clientList from "./Client.json";
+import clientList from "./Client.json" assert { type: "json" };
 var form = document.querySelector(".invoiceForm");
 var addButton = document.querySelector(".btn-add");
 var submitButton = document.querySelector(".submitButton");
