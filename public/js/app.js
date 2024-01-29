@@ -1,4 +1,4 @@
-import clientList from "./Client.json";
+// import clientList from "./Client.json";
 var form = document.querySelector(".invoiceForm");
 var addButton = document.querySelector(".btn-add");
 var submitButton = document.querySelector(".submitButton");
@@ -6,11 +6,29 @@ var deleteButton = document.querySelector(".btn-delete");
 var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 var products = [];
+var clientList ;
 const lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
-console.log(lastInvoiceNumber)
+// console.log(lastInvoiceNumber)
 var lastInvoiceNumberElement = document.querySelector(".lastInvoiceNumber");
 if(lastInvoiceNumber){
   lastInvoiceNumberElement.innerHTML = lastInvoiceNumber;
+}
+
+function getClients(){
+  return fetch('./Client.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(clientList => {
+    // console.log('Client list:', clientList);
+    return clientList
+  })
+  .catch(error => {
+    console.error('There was a problem fetching the client list:', error);
+  });
 }
 // addButton.addEventListener("click", (e) => addProducts(e));
 // addButton.addEventListener("touchstart", (e) => addProducts(e));
@@ -87,9 +105,10 @@ function calculateTotal() {
   products[0]["roundOff"] = roundOff;
 }
 
-clientName.addEventListener("change", (e) => {
+clientName.addEventListener("change", async (e) => {
   var CGST, SGST, IGST;
-  clientList.clientList.forEach((client) => {
+  clientList = await getClients()
+  clientList.forEach((client) => {
     if (client.Name == e.target.value) {
       products.pop();
       document.querySelector(".client__Company-Name").innerHTML = client.Name;
@@ -112,9 +131,10 @@ function clearInputFields() {
 }
 
 
-function getGST() {
+async function getGST() {
   var CGST, SGST, IGST;
-  clientList.clientList.forEach((client) => {
+  clientList = await getClients()
+  clientList.forEach((client) => {
     if (
       client.Name == document.querySelector(".client__Company-Name").innerHTML
     ) {

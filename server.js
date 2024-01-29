@@ -1,6 +1,7 @@
 const express = require("express");
 const puppeteer = require('puppeteer');
 const path = require("path");
+const cors = require("cors");
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const clientList = require("./public/js/Client.json");
@@ -12,10 +13,15 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "node_modules")));
 app.use(bodyParser.json());
-// Get an item from local storage
+app.use(cors());
+
+// Route to serve JSON file
+app.get('/Client.json', (req, res) => {
+    res.sendFile(__dirname + '/public/js/Client.json');
+});
 
 app.get("/", (req, res) => {
-  res.render("index", { clientList: clientList.clientList });
+  res.render("index", { clientList: clientList });
 });
 
 
