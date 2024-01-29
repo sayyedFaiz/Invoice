@@ -12,11 +12,13 @@ var lastInvoiceNumberElement = document.querySelector(".lastInvoiceNumber");
 if(lastInvoiceNumber){
   lastInvoiceNumberElement.innerHTML = lastInvoiceNumber;
 }
-addButton.addEventListener("click", (e) => addProducts(e));
-addButton.addEventListener("touchstart", (e) => addProducts(e));
+// addButton.addEventListener("click", (e) => addProducts(e));
+// addButton.addEventListener("touchstart", (e) => addProducts(e));
+addButton.addEventListener("pointerdown",(e)=>addProducts(e))
+deleteButton.addEventListener("pointerdown", () => deleteProducts());
 
-deleteButton.addEventListener("click", () => deleteProducts());
-deleteButton.addEventListener("touchstart", () => deleteProducts());
+// deleteButton.addEventListener("click", () => deleteProducts());
+// deleteButton.addEventListener("touchstart", () => deleteProducts());
 
 function updateProducts() {
   const data = Object.fromEntries(new FormData(form).entries());
@@ -130,8 +132,8 @@ function getGST() {
   return [CGST, SGST, IGST];
 }
 
-submitButton.addEventListener("click",  () => submit());
-submitButton.addEventListener("touchStart",  () => submit());
+submitButton.addEventListener("pointerdown",  () => submit());
+// submitButton.addEventListener("touchStart",  () => submit());
 
 
 function addProducts(e){
