@@ -1,9 +1,7 @@
 let generatePDF = document.querySelector(".generatePDF");
 let downloadPDF = document.querySelector(".downloadPDF");
 
-generatePDF.addEventListener("click", () => print());
-generatePDF.addEventListener("touchstart", () => print());
-
+generatePDF.addEventListener("pointerdown", () => print());
 function updadateLastInvoice() {
   let InvoiceField = document.querySelector(".Invoice");
   let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
@@ -12,11 +10,7 @@ function updadateLastInvoice() {
   }
 }
 
-downloadPDF.addEventListener("click", function () {
-  window.location.href = "/download-invoice";
-});
-
-downloadPDF.addEventListener("touchstart", function () {
+downloadPDF.addEventListener("pointerdown", function () {
   window.location.href = "/download-invoice";
 });
 

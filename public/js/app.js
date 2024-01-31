@@ -1,4 +1,3 @@
-// import clientList from "./Client.json";
 var form = document.querySelector(".invoiceForm");
 var addButton = document.querySelector(".btn-add");
 var submitButton = document.querySelector(".submitButton");
@@ -8,7 +7,6 @@ var clientName = document.querySelector(".Client-company-name");
 var products = [];
 var clientList ;
 const lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
-// console.log(lastInvoiceNumber)
 var lastInvoiceNumberElement = document.querySelector(".lastInvoiceNumber");
 if(lastInvoiceNumber){
   lastInvoiceNumberElement.innerHTML = lastInvoiceNumber;
@@ -63,7 +61,6 @@ function updateProducts() {
 
 async function calculateTotal() {
   let taxes = await getGST();
-  console.log(taxes)
   let CGST = parseFloat(taxes[0]);
   let SGST = parseFloat(taxes[1]);
   let IGST = parseFloat(taxes[2]);
@@ -75,8 +72,6 @@ async function calculateTotal() {
       products[0]["total"] = grandTotal;
     }
   });
-  // console.log("calculate products:", products);
-  // console.log("Before :", grandTotal);
   document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
   document.querySelector(".CGST").innerHTML = (grandTotal * CGST) / 100;
   document.querySelector(".SGST").innerHTML = (grandTotal * SGST) / 100;
@@ -89,12 +84,10 @@ async function calculateTotal() {
     (grandTotal * parseFloat(IGST)) / 100 +
     (grandTotal * parseFloat(CGST)) / 100 +
     (grandTotal * parseFloat(SGST)) / 100;
-  // console.log("After : ", grandTotal);
   roundOff = (Math.round(grandTotal) - grandTotal).toFixed(2);
   document.querySelector(".grandTotal").innerHTML =
     Math.round(grandTotal).toFixed(2);
   document.querySelector(".roundOff").innerHTML = roundOff;
-  // console.log(grandTotal, CGST);
   products[0]["grandTotal"] = Math.round(grandTotal).toFixed(2);
   products[0]["roundOff"] = roundOff;
 }
@@ -132,7 +125,6 @@ async function getGST() {
     if (
       client.Name == document.querySelector(".client__Company-Name").innerHTML
       ) {
-      console.log(client.GSTValue)
 
       if (Object.values(client).includes("CGST")) {
         CGST = parseFloat(client.GSTValue);
@@ -148,9 +140,7 @@ async function getGST() {
   return [CGST, SGST, IGST];
 }
 
-submitButton.addEventListener("pointerdown",  () => submit());
-// submitButton.addEventListener("touchStart",  () => submit());
-
+submitButton.addEventListener("pointerdown",  () => {if(products.length) submit()});
 
 function addProducts(e){
   if (form.checkValidity()) {
@@ -166,13 +156,11 @@ function addProducts(e){
 function deleteProducts(){
   if (products.length) {
     products = products.slice(1);
-    // console.log("after delete", products);
     productTable.lastElementChild.remove();
     calculateTotal();
     clearInputFields();
   }
 }
-
 
 async function submit(){
   const response = await fetch("/send-products", {

@@ -46,10 +46,9 @@ app.get('/download-invoice', async (req, res) => {
     await browser.close();
 
     // Ensure that receivedProducts is defined and has the required properties
-    let fileName = `Invoice-${new Date().toISOString()}`;
     if (receivedProducts && receivedProducts.length > 0) {
-      const productName = receivedProducts[receivedProducts.length - 1].Name.trim();
-      fileName = `${productName}-${date}`;
+      const companyName = receivedProducts[receivedProducts.length - 1].Name.trim();
+      var fileName = `${companyName}-${date}`;
     }
 
     res.setHeader('Content-Disposition', `attachment; filename=${fileName}.pdf`);
