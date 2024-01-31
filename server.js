@@ -44,14 +44,14 @@ app.get('/download-invoice', async (req, res) => {
     const pdf = await page.pdf({ format: 'A4', printBackground: true, margin: 'none', preferCSSPageSize: true });
 
     await browser.close();
-
+    let fileName = 'Invoice.pdf'
     // Ensure that receivedProducts is defined and has the required properties
     if (receivedProducts && receivedProducts.length > 0) {
       const companyName = receivedProducts[receivedProducts.length - 1].Name.trim();
-      var fileName = `${companyName}-${date}`;
+      fileName = `${companyName}-${date}.pdf`;
     }
 
-    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.pdf`);
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
     res.contentType("application/pdf");
     res.send(pdf);
   } catch (error) {
