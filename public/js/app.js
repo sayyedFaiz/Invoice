@@ -14,29 +14,22 @@ if(lastInvoiceNumber){
   lastInvoiceNumberElement.innerHTML = lastInvoiceNumber;
 }
 
-function getClients(){
-  return fetch('./Client.json')
-  .then(response => {
+async function getClients(){
+  try {
+    const response = await fetch('./Client.json');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    return response.json();
-  })
-  .then(clientList => {
-    // console.log('Client list:', clientList);
-    return clientList
-  })
-  .catch(error => {
+    const clientList = await response.json();
+    return clientList;
+  } catch (error) {
     console.error('There was a problem fetching the client list:', error);
-  });
+  }
 }
-// addButton.addEventListener("click", (e) => addProducts(e));
-// addButton.addEventListener("touchstart", (e) => addProducts(e));
+
 addButton.addEventListener("pointerdown",(e)=>addProducts(e))
 deleteButton.addEventListener("pointerdown", () => deleteProducts());
 
-// deleteButton.addEventListener("click", () => deleteProducts());
-// deleteButton.addEventListener("touchstart", () => deleteProducts());
 
 function updateProducts() {
   const data = Object.fromEntries(new FormData(form).entries());
@@ -68,8 +61,9 @@ function updateProducts() {
   }
 }
 
-function calculateTotal() {
-  let taxes = getGST();
+async function calculateTotal() {
+  let taxes = await getGST();
+  console.log(taxes)
   let CGST = parseFloat(taxes[0]);
   let SGST = parseFloat(taxes[1]);
   let IGST = parseFloat(taxes[2]);
@@ -81,7 +75,7 @@ function calculateTotal() {
       products[0]["total"] = grandTotal;
     }
   });
-  console.log("calculate products:", products);
+  // console.log("calculate products:", products);
   // console.log("Before :", grandTotal);
   document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
   document.querySelector(".CGST").innerHTML = (grandTotal * CGST) / 100;
@@ -137,7 +131,9 @@ async function getGST() {
   clientList.forEach((client) => {
     if (
       client.Name == document.querySelector(".client__Company-Name").innerHTML
-    ) {
+      ) {
+      console.log(client.GSTValue)
+
       if (Object.values(client).includes("CGST")) {
         CGST = parseFloat(client.GSTValue);
         SGST = parseFloat(client.GSTValue);
