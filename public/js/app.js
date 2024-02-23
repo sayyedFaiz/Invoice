@@ -26,6 +26,7 @@ async function getClients(){
 }
 
 addButton.addEventListener("pointerdown",(e)=>addProducts(e))
+addButton.addEventListener("keydown",(e)=>{if(e.key === 'Enter')addProducts(e)})
 deleteButton.addEventListener("pointerdown", () => deleteProducts());
 
 
