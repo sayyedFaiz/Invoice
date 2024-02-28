@@ -118,5 +118,13 @@
             "TransportName": "",
             "GSTValue": 9,
             "GST": "CGST"
+        },
+        {
+            "Name": "M/s. Magoo Engineering Services",
+            "Address": "129/4576 Tribhuvan HSG Society, Nr. Tilak Nagar Station Chembur Mumbai-400089",
+            "GSTNumber": "GST: 27ACYPM7223P1ZL",
+            "TransportName": "",
+            "GSTValue": 9,
+            "GST": "CGST"
         }
     ]
