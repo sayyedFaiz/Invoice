@@ -39,13 +39,8 @@ app.post("/print", (req, res) => {
 });
 
 app.get("/print", (req, res) => {
-  if (receivedProducts.length === 0) {
-    // If receivedProducts is empty, redirect to the home page
-    res.redirect('/');
-  } else {
-    // If receivedProducts is not empty, render the print page
     res.render("print", { receivedProducts });
-  }
+
 });
 
 app.get('/download-invoice', async (req, res) => {
