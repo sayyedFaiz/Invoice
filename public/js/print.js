@@ -10,9 +10,9 @@ function updadateLastInvoice() {
   }
 }
 
-// downloadPDF.addEventListener("pointerdown", function () {
-//   window.location.href = "/download-invoice";
-// });
+downloadPDF.addEventListener("pointerdown", function () {
+  window.location.href = "/download-invoice";
+});
 
 function print() {
   updadateLastInvoice();

@@ -147,6 +147,7 @@ function addProducts(e){
   if (form.checkValidity()) {
     updateProducts();
     clearInputFields();
+    console.log(products)
   } else {
     form.classList.add("was-validated");
     e.preventDefault();
@@ -164,7 +165,7 @@ function deleteProducts(){
 }
 
 async function submit(){
-  const response = await fetch("/send-products", {
+  const response = await fetch("/print", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -172,10 +173,11 @@ async function submit(){
     body: JSON.stringify({ products }), // Send the products array as JSON
   });
 
-  if (response.ok) {
-    console.log("Products sent successfully!");
+  if (response.ok && products.length > 1) {
+      window.location.href = "/print"
+      console.log("Products sent successfully!");
   } else {
+    alert("Please Enter atleast One Product")
     console.error("Failed to send products.");
   }
-    window.location.href = "/print"
 }
