@@ -49,7 +49,7 @@ app.get('/download-invoice', async (req, res) => {
     if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
       options = {
         args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
-        executablePath: await chrome.executablePath,
+        executablePath: puppeteer.executablePath(),
         headless: true
       }
     }
