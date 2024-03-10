@@ -1,9 +1,9 @@
 const express = require("express");
-if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
-  let puppeteer = require("puppeteer-core");
-}else{
-  puppeteer = require('puppeteer')
-}
+// if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
+//   let puppeteer = require("puppeteer-core");
+// }else{
+  const puppeteer = require('puppeteer')
+// }
 
 const path = require("path");
 const cors = require("cors");
@@ -43,13 +43,13 @@ app.get("/print", (req, res) => {
 
 app.get('/download-invoice', async (req, res) => {
   try {
-    let options ={}
-    if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
-      options = {
-        executablePath: puppeteer.executablePath(),
-        headless: true
-      }
-    }
+    let options ={headless: true}
+    // if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
+    //   options = {
+    //     executablePath: puppeteer.executablePath(),
+    //     headless: true
+    //   }
+    // }
     const browser = await puppeteer.launch(options);
     const page = await browser.newPage();
     // Replace with the full URL of your server when deployed
