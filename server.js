@@ -2,7 +2,7 @@ const express = require("express");
 // if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
 //   let puppeteer = require("puppeteer-core");
 // }else{
-  const puppeteer = require('puppeteer')
+const puppeteer = require("puppeteer");
 // }
 
 const path = require("path");
@@ -37,42 +37,50 @@ app.post("/print", (req, res) => {
 });
 
 app.get("/print", (req, res) => {
-    res.render("print", { receivedProducts });
-
+  res.render("print", { receivedProducts });
 });
 
-app.get('/download-invoice', async (req, res) => {
+app.get("/download-invoice", async (req, res) => {
   try {
-    let options ={headless: false}
-    // if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
-    //   options = {
-    //     executablePath: puppeteer.executablePath(),
-    //     headless: true
-    //   }
-    // }
+    let options = {args:[
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "no-zygote"
+    ] };
     const browser = await puppeteer.launch(options);
     const page = await browser.newPage();
     // Replace with the full URL of your server when deployed
-    await page.goto(`${process.env.SERVER_URL}/print`, { waitUntil: 'networkidle0' });
-    const pdf = await page.pdf({ format: 'A4', printBackground: true, margin: 'none', preferCSSPageSize: true });
+    await page.goto(`${process.env.SERVER_URL}/print`, {
+      waitUntil: "networkidle0",
+    });
+    const pdf = await page.pdf({
+      format: "A4",
+      printBackground: true,
+      margin: "none",
+      preferCSSPageSize: true,
+    });
 
     await browser.close();
 
     // Ensure that receivedProducts is defined and has the required properties
     if (receivedProducts && receivedProducts.length > 0) {
-      const companyName = receivedProducts[receivedProducts.length - 1].Name.trim();
+      const companyName =
+        receivedProducts[receivedProducts.length - 1].Name.trim();
       var fileName = `${companyName}-${date}`;
     }
 
-    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.pdf`);
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=${fileName}.pdf`
+    );
     res.contentType("application/pdf");
     res.send(pdf);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error generating invoice');
+    res.status(500).send("Error generating invoice");
   }
 });
-
 
 app.listen(port, () => {
   console.log(` app listening on port ${port}`);
