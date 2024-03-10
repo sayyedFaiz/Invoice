@@ -43,7 +43,7 @@ app.get("/print", (req, res) => {
 
 app.get('/download-invoice', async (req, res) => {
   try {
-    let options ={headless: true}
+    let options ={headless: false}
     // if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
     //   options = {
     //     executablePath: puppeteer.executablePath(),
