@@ -42,7 +42,9 @@ app.get("/print", (req, res) => {
 
 app.get("/download-invoice", async (req, res) => {
   try {
-    let options = {args:[
+    let options = {
+      executablePath: process.env.NODE_ENV === 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
+      args:[
       "--disable-setuid-sandbox",
       "--no-sandbox",
       "--single-process",
