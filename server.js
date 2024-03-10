@@ -43,13 +43,17 @@ app.get("/print", (req, res) => {
 app.get("/download-invoice", async (req, res) => {
   try {
     let options = {
-      executablePath: process.env.NODE_ENV === 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
-      args:[
-      "--disable-setuid-sandbox",
-      "--no-sandbox",
-      "--single-process",
-      "no-zygote"
-    ] };
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
+      args: [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "no-zygote",
+      ],
+    };
     const browser = await puppeteer.launch(options);
     const page = await browser.newPage();
     // Replace with the full URL of your server when deployed
