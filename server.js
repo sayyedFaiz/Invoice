@@ -1,7 +1,11 @@
 const express = require("express");
-const puppeteer = require("puppeteer");
 const path = require("path");
 const cors = require("cors");
+const ejs = require("ejs");
+const fs = require("fs");
+const pdf = require("html-pdf");
+const PDFDocument = require("pdfkit");
+const blobStream = require("blob-stream");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const clientList = require("./public/js/Client.json");
@@ -36,40 +40,23 @@ app.get("/print", (req, res) => {
 });
 
 app.get("/download-invoice", async (req, res) => {
-  // try {
-
-  //   const browser = await puppeteer.launch();
-  //   const page = await browser.newPage();
-  //   // Replace with the full URL of your server when deployed
-  //   await page.goto(`${process.env.SERVER_URL}/print`, {
-  //     waitUntil: "networkidle0",
-  //   });
-  //   const pdf = await page.pdf({
-  //     format: "A4",
-  //     printBackground: true,
-  //     margin: "none",
-  //     preferCSSPageSize: true,
-  //   });
-
-  //   await browser.close();
-
-  //   // Ensure that receivedProducts is defined and has the required properties
-  //   if (receivedProducts && receivedProducts.length > 0) {
-  //     const companyName =
-  //       receivedProducts[receivedProducts.length - 1].Name.trim();
-  //     var fileName = `${companyName}-${date}`;
-  //   }
-
-  //   res.setHeader(
-  //     "Content-Disposition",
-  //     `attachment; filename=${fileName}.pdf`
-  //   );
-  //   res.contentType("application/pdf");
-  //   res.send(pdf);
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).send("Error generating invoice");
-  // }
+  try {
+    const html = await ejs.renderFile("views/print.ejs", { receivedProducts });
+    // Convert HTML to PDF
+    pdf.create(html).toStream((err, stream) => {
+      if (err) {
+        console.error("Error generating PDF:", error);
+        res.status(500).send("Error generating PDF");
+        return;
+      }
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader("Content-Disposition", 'attachment; filename="output.pdf"');
+      stream.pipe(res);
+    });
+  } catch (error) {
+    console.error("Error generating PDF:", error);
+    res.status(500).send("Error generating PDF");
+  }
 });
 
 app.listen(port, () => {
