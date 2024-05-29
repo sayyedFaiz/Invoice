@@ -126,5 +126,13 @@
             "TransportName": "",
             "GSTValue": 9,
             "GST": "CGST"
+        },
+        {
+            "Name": "YAS Enterprises",
+            "Address": "F-97 Gala No.03, Mamsa Industrial Estate, Morland Road, Naya Nagar, Mumbai-400008",
+            "GSTNumber": "GST: 27BUCPA6830K1Z0",
+            "TransportName": "",
+            "GSTValue": 6,
+            "GST": "CGST"
         }
     ]
