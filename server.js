@@ -1,8 +1,7 @@
 const express = require("express");
+const puppeteer = require("puppeteer");
 const path = require("path");
 const cors = require("cors");
-const ejs = require("ejs");
-const fs = require("fs");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const clientList = require("./public/js/Client.json");
@@ -24,7 +23,6 @@ app.get("/Client.json", (req, res) => {
 app.get("/", (req, res) => {
   res.render("index", { clientList: clientList });
 });
-
 // Handle the POST request to receive the products data
 app.post("/print", (req, res) => {
   receivedProducts = req.body.products; // Get the products array from the request
@@ -37,17 +35,40 @@ app.get("/print", (req, res) => {
 });
 
 app.get("/download-invoice", async (req, res) => {
-  try {
-    //   // Ensure that receivedProducts is defined and has the required properties
-    if (receivedProducts && receivedProducts.length > 0) {
-      const companyName =
-        receivedProducts[receivedProducts.length - 1].Name.trim();
-      var fileName = `${companyName}-${date}`;
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error generating invoice");
-  }
+  // try {
+
+  //   const browser = await puppeteer.launch();
+  //   const page = await browser.newPage();
+  //   // Replace with the full URL of your server when deployed
+  //   await page.goto(`${process.env.SERVER_URL}/print`, {
+  //     waitUntil: "networkidle0",
+  //   });
+  //   const pdf = await page.pdf({
+  //     format: "A4",
+  //     printBackground: true,
+  //     margin: "none",
+  //     preferCSSPageSize: true,
+  //   });
+
+  //   await browser.close();
+
+  //   // Ensure that receivedProducts is defined and has the required properties
+  //   if (receivedProducts && receivedProducts.length > 0) {
+  //     const companyName =
+  //       receivedProducts[receivedProducts.length - 1].Name.trim();
+  //     var fileName = `${companyName}-${date}`;
+  //   }
+
+  //   res.setHeader(
+  //     "Content-Disposition",
+  //     `attachment; filename=${fileName}.pdf`
+  //   );
+  //   res.contentType("application/pdf");
+  //   res.send(pdf);
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).send("Error generating invoice");
+  // }
 });
 
 app.listen(port, () => {

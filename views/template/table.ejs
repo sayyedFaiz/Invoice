@@ -40,15 +40,15 @@
               <td class="totalBeforeTax"><%= receivedProducts[0].total %></td>
             </tr>
             <tr>
-              <td class="">CGST 9%</td>
+              <td class="">CGST <%= receivedProducts[0].CGST_Value %>%</td>
               <td class="CGST tax"><%= receivedProducts[0].CGST %></td>
             </tr>
             <tr>
-              <td class="">SGST 9%</td>
+              <td class="">SGST <%= receivedProducts[0].SGST_Value %>%</td>
               <td class="SGST tax"><%= receivedProducts[0].SGST %></td>
             </tr>
             <tr>
-              <td class="">IGST 18%</td>
+              <td class="">IGST <%= receivedProducts[0].IGST_Value %>%</td>
               <td class="IGST tax"><%= receivedProducts[0].IGST %></td>
             </tr>
             <tr>

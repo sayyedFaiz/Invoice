@@ -5,30 +5,31 @@ var deleteButton = document.querySelector(".btn-delete");
 var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 var products = [];
-var clientList ;
+var clientList;
 const lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
 var lastInvoiceNumberElement = document.querySelector(".lastInvoiceNumber");
-if(lastInvoiceNumber){
+if (lastInvoiceNumber) {
   lastInvoiceNumberElement.innerHTML = lastInvoiceNumber;
 }
 
-async function getClients(){
+async function getClients() {
   try {
-    const response = await fetch('./Client.json');
+    const response = await fetch("./Client.json");
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error("Network response was not ok");
     }
     const clientList = await response.json();
     return clientList;
   } catch (error) {
-    console.error('There was a problem fetching the client list:', error);
+    console.error("There was a problem fetching the client list:", error);
   }
 }
 
-addButton.addEventListener("pointerdown",(e)=>addProducts(e))
-addButton.addEventListener("keydown",(e)=>{if(e.key === 'Enter')addProducts(e)})
+addButton.addEventListener("pointerdown", (e) => addProducts(e));
+addButton.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addProducts(e);
+});
 deleteButton.addEventListener("pointerdown", () => deleteProducts());
-
 
 function updateProducts() {
   const data = Object.fromEntries(new FormData(form).entries());
@@ -48,7 +49,7 @@ function updateProducts() {
     });
     let item = `
     <tr>
-      <td>${products.length-1}</td>
+      <td>${products.length - 1}</td>
       <td>${products[0].ProductName}</td>
       <td>${products[0].HSN}</td>
       <td>${productQuantity}</td>
@@ -65,6 +66,9 @@ async function calculateTotal() {
   let CGST = parseFloat(taxes[0]);
   let SGST = parseFloat(taxes[1]);
   let IGST = parseFloat(taxes[2]);
+  products[0]["CGST_Value"] = CGST;
+  products[0]["SGST_Value"] = SGST;
+  products[0]["IGST_Value"] = IGST;
   let roundOff = 0;
   let grandTotal = 0;
   products.forEach((product) => {
@@ -95,7 +99,7 @@ async function calculateTotal() {
 
 clientName.addEventListener("change", async (e) => {
   var CGST, SGST, IGST;
-  clientList = await getClients()
+  clientList = await getClients();
   clientList.forEach((client) => {
     if (client.Name == e.target.value) {
       products.pop();
@@ -118,15 +122,13 @@ function clearInputFields() {
   });
 }
 
-
 async function getGST() {
   var CGST, SGST, IGST;
-  clientList = await getClients()
+  clientList = await getClients();
   clientList.forEach((client) => {
     if (
       client.Name == document.querySelector(".client__Company-Name").innerHTML
-      ) {
-
+    ) {
       if (Object.values(client).includes("CGST")) {
         CGST = parseFloat(client.GSTValue);
         SGST = parseFloat(client.GSTValue);
@@ -141,13 +143,14 @@ async function getGST() {
   return [CGST, SGST, IGST];
 }
 
-submitButton.addEventListener("pointerdown",  () => {if(products.length) submit()});
+submitButton.addEventListener("pointerdown", () => {
+  if (products.length) submit();
+});
 
-function addProducts(e){
+function addProducts(e) {
   if (form.checkValidity()) {
     updateProducts();
     clearInputFields();
-    console.log(products)
   } else {
     form.classList.add("was-validated");
     e.preventDefault();
@@ -155,7 +158,7 @@ function addProducts(e){
   }
 }
 
-function deleteProducts(){
+function deleteProducts() {
   if (products.length) {
     products = products.slice(1);
     productTable.lastElementChild.remove();
@@ -164,7 +167,7 @@ function deleteProducts(){
   }
 }
 
-async function submit(){
+async function submit() {
   const response = await fetch("/print", {
     method: "POST",
     headers: {
@@ -174,10 +177,10 @@ async function submit(){
   });
 
   if (response.ok && products.length > 1) {
-      window.location.href = "/print"
-      console.log("Products sent successfully!");
+    window.location.href = "/print";
+    console.log("Products sent successfully!");
   } else {
-    alert("Please Enter atleast One Product")
+    alert("Please Enter atleast One Product");
     console.error("Failed to send products.");
   }
 }
