@@ -14,6 +14,7 @@
 
   <body id="element-to-print">
     <div class="container h-100" id="print">
+    <!-- header -->
       <div class="row">
         <div class="col">
           <h1 class="Company-Title text-center">SAIYYAD ENGINEERING WORKS</h1>
@@ -41,6 +42,7 @@
           <h3 class="invoice">invoice</h3>
         </div>
       </div>
+      <!-- client info -->
       <div class="row position-relative">
         <div class="col">
           <div class="client-details-container d-flex flex-column">
@@ -56,7 +58,7 @@
           <div>Invoice No: <span class="Invoice"></span></div>
         </div>
       </div>
-
+    <!-- Entry form -->
       <form class="invoiceForm needs-validation d-print-none">
         <div class="row">
           <div class="col-md-auto InvoiceNumber-container">
@@ -171,6 +173,7 @@
           </button>
         </div>
       </form>
+      <!-- products table -->
       <div class="row">
         <div class="col">
           <table class="table table-bordered border-dark">
@@ -227,8 +230,6 @@
       <%- include('./template/footer') %>
 
     </div>
-    <!-- HTML2PDF  -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <!-- Bootstrap  -->
     <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- CUSTOM  -->

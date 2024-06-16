@@ -15,9 +15,16 @@
 
   <body id="element-to-print">
     <div class="container" id="print">
-      <%- include('./template/header' ) %>
-      <%- include('./template/table') %>
-      <%- include('./template/footer') %>
+      <% if (receivedProducts.length) { %>
+        <%- include('./template/header') %>
+        <%- include('./template/table') %>
+        <%- include('./template/footer') %>
+      <% } else { %>
+        <script>
+          window.location.href = '/';
+        </script>
+      <% } %>
+
       <div class="row d-print-none my-3">
         <div class="col text-center">
             <button class="btn btn-primary generatePDF">Print</button>

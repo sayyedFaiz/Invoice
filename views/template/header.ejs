@@ -21,6 +21,7 @@
     <h3 class="invoice">invoice</h3>
   </div>
 </div>
+<% if (receivedProducts.length) { %>
 <div class="row">
   <div class="col">
     <div class="client-details-container d-flex flex-column">
@@ -38,3 +39,6 @@
     <div>Invoice No: <span class="Invoice"><%= receivedProducts[0].InvoiceNumber %></span></div>
   </div>
 </div>
+<% } else { %>
+  <div class="row d-none"></div>
+<% } %>
