@@ -134,5 +134,13 @@
             "TransportName": "",
             "GSTValue": 6,
             "GST": "CGST"
+        },
+        {
+            "Name": "Classic Enterprises",
+            "Address": "Gala No. 34, Sainath Wadi, Bhangar Gali, Tilak Nagar, Sakinaka, Andheri (E), Mumbai-400072",
+            "GSTNumber": "GST: 27AEMPC0901J1ZS",
+            "TransportName": "",
+            "GSTValue": 9,
+            "GST": "CGST"
         }
     ]
