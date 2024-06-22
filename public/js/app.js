@@ -144,7 +144,7 @@ async function getGST() {
 }
 
 submitButton.addEventListener("pointerdown", () => {
-  if (products.length) submit();
+  (products.length) ? submit() : alert("Please Enter atleast One Product");
 });
 
 function addProducts(e) {
@@ -176,11 +176,10 @@ async function submit() {
     body: JSON.stringify({ products }), // Send the products array as JSON
   });
 
-  if (response.ok && products.length > 1) {
+  if (response.ok) {
     updadateLastInvoice()
     window.location.href = "/download-invoice";
   } else {
-    alert("Please Enter atleast One Product");
     console.error("Failed to send products.");
   }
 }

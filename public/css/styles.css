@@ -18,7 +18,7 @@ input::-webkit-inner-spin-button {
 .container{
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
+  justify-content: space-between;
 }
 .contact-details {
   top: 60px;
