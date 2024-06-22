@@ -177,10 +177,19 @@ async function submit() {
   });
 
   if (response.ok && products.length > 1) {
-    window.location.href = "/print";
-    console.log("Products sent successfully!");
+    updadateLastInvoice()
+    window.location.href = "/download-invoice";
   } else {
     alert("Please Enter atleast One Product");
     console.error("Failed to send products.");
+  }
+}
+
+
+function updadateLastInvoice() {
+  let currentInvoiceNumber = document.querySelector(".InvoiceNumber-Input").value;
+  let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
+  if (parseInt(currentInvoiceNumber) > parseInt(lastInvoiceNumber)) {
+    localStorage.setItem("InvoiceNumber", `${currentInvoiceNumber}`);
   }
 }
