@@ -8,7 +8,7 @@ const clientList = require("./data/Client.json");
 const app = express();
 let receivedProducts = [];
 const date = new Date().toJSON().slice(0, 10);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "node_modules")));
@@ -58,11 +58,6 @@ app.get("/download-invoice", async (req, res) => {
         receivedProducts[receivedProducts.length - 1].Name.trim();
       var fileName = `${companyName}-${date}`;
     }
-
-    // res.setHeader(
-    //   "Content-Disposition",
-    //   `attachment; filename=${fileName}.pdf`
-    // );
     res.contentType("application/pdf");
     res.send(pdf);
   } catch (error) {
