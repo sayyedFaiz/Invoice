@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="application/json; charset=utf-8">
+    <meta http-equiv="Content-Type" content="application/json; charset=utf-8" />
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/print.css" media="print" />
@@ -14,6 +14,7 @@
 
   <body id="element-to-print">
     <div class="container h-100" id="print">
+      <!-- header -->
       <div class="row">
         <div class="col">
           <h1 class="Company-Title text-center">SAIYYAD ENGINEERING WORKS</h1>
@@ -41,10 +42,11 @@
           <h3 class="invoice">invoice</h3>
         </div>
       </div>
+      <!-- client info -->
       <div class="row position-relative">
         <div class="col">
           <div class="client-details-container d-flex flex-column">
-            <span class="receiver">To</span>
+            <span class="receiver d-none">To</span>
             <div class="client__Company-Name fw-bold fs-4"></div>
             <div class="client__GST-number"></div>
             <div class="client__address"></div>
@@ -56,16 +58,16 @@
           <div>Invoice No: <span class="Invoice"></span></div>
         </div>
       </div>
-
+      <!-- Entry form -->
       <form class="invoiceForm needs-validation d-print-none">
         <div class="row">
           <div class="col-md-auto InvoiceNumber-container">
             <label for="InvoiceNumber" class="form-label-InvoiceNumber"
               >Invoice No.</label
             >
-            <label class="mx-3 form-label text-secondary"
-              >Last Bill No. <span class="lastInvoiceNumber"></span
-            ></label>
+            <p class="mx-3 my-0 d-inline text-secondary">
+              Last Bill No. <span class="lastInvoiceNumber"></span>
+            </p>
             <input
               type="number"
               required
@@ -73,10 +75,10 @@
               name="InvoiceNumber"
               id="InvoiceNumber"
               placeholder="Enter Invoice No."
-                          />
+            />
           </div>
-          <div class="col-md-auto ms-auto">
-            <label for="Date" class="form-label Date-label">Date:</label>
+          <div class="col-md-auto ms-auto d-flex justify-content-center align-items-center my-1">
+            <label for="Date" class="form-label Date-label m-0 px-1">Date:</label>
             <input
               type="date"
               required
@@ -89,8 +91,13 @@
         </div>
         <div class="row">
           <div class="col-md-5 mt-3">
-            <label for="Company Name" class="d-print-none">Company Name</label>
-            <select class="form-select Client-company-name" name="Company Name" required>
+            <label for="CompanyName" class="d-print-none">Company Name</label>
+            <select
+              class="form-select Client-company-name"
+              name="CompanyName"
+              id="CompanyName"
+              required
+            >
               <option selected value="">Company Name</option>
               <% clientList.forEach((client)=>{ %>
               <option class="clientList"><%= client.Name %></option>
@@ -107,6 +114,7 @@
               type="text"
               class="form-control d-print-none productData"
               name="ProductName"
+              id="ProductName"
               placeholder="Enter Product Name"
               required
             />
@@ -118,6 +126,7 @@
               class="form-control d-print-none productData"
               min="0"
               name="HSN"
+              id="HSN"
               placeholder="Enter HSN No."
             />
           </div>
@@ -131,6 +140,7 @@
               class="form-control d-print-none productData"
               min="0"
               name="Quantity"
+              id="Quantity"
               placeholder="Enter Quantity"
               required
             />
@@ -143,6 +153,7 @@
               step="any"
               min="0"
               name="Price"
+              id="Price"
               placeholder="Enter Price"
               required
             />
@@ -171,6 +182,7 @@
           </button>
         </div>
       </form>
+      <!-- products table -->
       <div class="row">
         <div class="col">
           <table class="table table-bordered border-dark">
@@ -184,14 +196,15 @@
                 <th>Amount</th>
               </tr>
             </thead>
-            <tbody>
-            </tbody>
+            <tbody></tbody>
             <tfoot>
               <tr>
                 <td colspan="4" rowspan="6">
                   <div class="d-flex flex-column fs-6 bankDetails">
                     <span class="fw-bold"> Payment Method: </span>
-                    <span>Bank Name: Janaseva Sahakari Bank (Borivali) LTD.</span>
+                    <span
+                      >Bank Name: Janaseva Sahakari Bank (Borivali) LTD.</span
+                    >
                     <span>Account Number: 008021100000184 </span>
                     <span> Branch: Bhayander East </span>
                     <span> IFSC Code:JASB0000009</span>
@@ -225,10 +238,7 @@
         </div>
       </div>
       <%- include('./template/footer') %>
-
     </div>
-    <!-- HTML2PDF  -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <!-- Bootstrap  -->
     <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- CUSTOM  -->

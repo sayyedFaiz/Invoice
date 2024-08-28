@@ -1,0 +1,149 @@
+[
+    {
+        "Name": "Brassotech International",
+        "Address": "Address: 484/A, GIDC, Shankar Tekri, Industrial estate,Jaam Nagar,Gujarat-361004",
+        "GSTNumber": "GST: 24AANFB7797G1ZY",
+        "TransportName": [
+            "Transport Name: Ranjeet Transport (27AATPV4835F1Z2)",
+            "Transport Name: CHARTERED SPEED LIMITED (24AADCC0802E1ZH)"
+        ],
+        "GSTValue": 18,
+        "GST": "IGST"
+    },
+    {
+        "Name": "Mehta Enterprises",
+        "Address": "Address: 15/98, Shiv Chaya, Nr. Municipal School,(F.C.I. Godown),Rajendra Nagaar, Borivali, Mumbai-400066",
+        "GSTNumber": "GST: 27AETPM3541H1Z6",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "Hira Industries",
+        "Address": "26/A, Panchal Udyog Nagar, Bhayander (East)",
+        "GSTNumber": "GST: 27AA1PJ3818K1ZH",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "Epoxy coating India",
+        "Address": "23-C, 4th street, pullianthrope, Chennai-600012",
+        "GSTNumber": "GST: 33AAFPJ9278A1ZU",
+        "TransportName": ["Transport Name: Mahaveer Transport(27AAMFM6323J1ZZ)"],
+        "GSTValue": 18,
+        "GST": "IGST"
+    },
+    {
+        "Name": "Polo Hardware",
+        "Address": "R.N.13, 1st Floor, Kasturi Udyog Building, Bhayander(East)",
+        "GSTNumber": "GST: 27ABBPS4166K1ZA",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "Chunilal Nagardas and Co.",
+        "Address": "194/198, Ruby Mariyam Building, Ground Floor, Nagdevi Street, Mumbai-400003",
+        "GSTNumber": "GST: 27AAEPJ8273A1ZV",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "Rajspring works",
+        "Address": "D/4, Vikas Udyog Nagar, Goddev Road, Near Hanuman Mandir, Bhayander(East), Thane-401105, Maharashtra",
+        "GSTNumber": "GST: 27AEEPS5807F1ZE",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "Tanay Enterprises",
+        "Address": "Flat No 202, New Asmita Co. Op. HSG. SOC. LTD. Bakery Galli Siddhivinayak Marg, Bhayander ",
+        "GSTNumber": "GST: 27APUPM0009A1Z7",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "RajLaxmi Steel Industries",
+        "Address": "Shop no 4, Ravi Estate, Opposite Ajay Estate, Gujrat Botling Road, Rakhial, Ahmedabad, Gujrat-380023",
+        "GSTNumber": "GST: 24AMOPB6667L1ZL",
+        "TransportName": "",
+        "GSTValue": 18,
+        "GST": "IGST"
+    },
+    {
+        "Name": "Bhalaria Metal Craft Pvt. Ltd.",
+        "Address": "Plot J/K, Bhalaria Industrial Premises Co-op. Soc. Ltd., Radha Swami Satsang Road, Bhayander (West) 401101, Thane",
+        "GSTNumber": "GST: 27AAACB1703A1ZL",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "SR Industries",
+        "Address": "C/312, Ratan Apartment, Near BMC Garden, Jogeshwari(E), Mumbai",
+        "GSTNumber": "GST: 27AGFPM0181R1ZX",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "Mehta Brothers",
+        "Address": "1/1, Ramanlal Chawal, Jambali Gali, Borivali - West, Mumbai - 400092",
+        "GSTNumber": "GST: 27AABPM8164E1ZP",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "Altido Corporation",
+        "Address": "B2, Swami Samarth Industrial Estate, BP Cross Road No.05, Bhayander (East), Thane - 401105",
+        "GSTNumber": "GST: 27AGNPJ9295M1ZD",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "Ganesh Metal",
+        "Address": "Sorath Estate, Near kanta Gas godown, Dhebar road, Atika, Rajkot,Gujarat, 360002",
+        "GSTNumber": "GST: 24AUEPD4321P1ZQ",
+        "TransportName": "",
+        "GSTValue": 18,
+        "GST": "IGST"
+    },
+    {
+        "Name": "Narayan Engg.co.",
+        "Address": "G/34A, Sonal Industrial Estste, Behind Reliance Energy, Shree Ram Nagar Lane,  Bhayander Phatak Road, Bhayander (East),  Thane-401105",
+        "GSTNumber": "GST: 27ABQPM6148J1Z1",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "M/s. Magoo Engineering Services",
+        "Address": "129/4576 Tribhuvan HSG Society, Nr. Tilak Nagar Station Chembur Mumbai-400089",
+        "GSTNumber": "GST: 27ACYPM7223P1ZL",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    },
+    {
+        "Name": "YAS Enterprises",
+        "Address": "F-97 Gala No.03, Mamsa Industrial Estate, Morland Road, Naya Nagar, Mumbai-400008",
+        "GSTNumber": "GST: 27BUCPA6830K1Z0",
+        "TransportName": "",
+        "GSTValue": 6,
+        "GST": "CGST"
+    },
+    {
+        "Name": "Classic Enterprises",
+        "Address": "Gala No. 34, Sainath Wadi, Bhangar Gali, Tilak Nagar, Sakinaka, Andheri (E), Mumbai-400072",
+        "GSTNumber": "GST: 27AEMPC0901J1ZS",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
+    }
+]

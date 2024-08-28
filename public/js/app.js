@@ -98,7 +98,6 @@ async function calculateTotal() {
 }
 
 clientName.addEventListener("change", async (e) => {
-  var CGST, SGST, IGST;
   clientList = await getClients();
   clientList.forEach((client) => {
     if (client.Name == e.target.value) {
@@ -107,9 +106,22 @@ clientName.addEventListener("change", async (e) => {
       document.querySelector(".client__GST-number").innerHTML =
         client.GSTNumber;
       document.querySelector(".client__address").innerHTML = client.Address;
-      document.querySelector(".client__Trasnport-details").innerHTML =
-        client.TransportName;
+
+      if (client.TransportName.length > 1) {
+        selectTransport(client.TransportName);
+        let getTransportBtn = document.querySelector(".getTransport-btn");
+        getTransportBtn.addEventListener("pointerdown", () => {
+          let transportName = document.querySelector(".Client-transport-name").value;
+          document.querySelector(".client__Trasnport-details").innerHTML = transportName
+          client.TransportName = (client.TransportName).filter(el => el === transportName)
+          console.log(client.TransportName)
+        });
+      } else {
+        document.querySelector(".client__Trasnport-details").innerHTML =
+          client.TransportName;
+      }
       products.push(client);
+      console.log(products)
     }
   });
   calculateTotal();
@@ -144,7 +156,7 @@ async function getGST() {
 }
 
 submitButton.addEventListener("pointerdown", () => {
-  if (products.length) submit();
+  products.length > 1 ? submit() : alert("Please Enter atleast One Product");
 });
 
 function addProducts(e) {
@@ -176,11 +188,61 @@ async function submit() {
     body: JSON.stringify({ products }), // Send the products array as JSON
   });
 
-  if (response.ok && products.length > 1) {
-    window.location.href = "/print";
-    console.log("Products sent successfully!");
+  if (response.ok) {
+    updadateLastInvoice();
+    window.location.href = "/download-invoice";
   } else {
-    alert("Please Enter atleast One Product");
     console.error("Failed to send products.");
   }
 }
+
+function updadateLastInvoice() {
+  let currentInvoiceNumber = document.querySelector(
+    ".InvoiceNumber-Input"
+  ).value;
+  let lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
+  if (parseInt(currentInvoiceNumber) > parseInt(lastInvoiceNumber)) {
+    localStorage.setItem("InvoiceNumber", `${currentInvoiceNumber}`);
+  }
+}
+
+function selectTransport(list) {
+  let transportElementList = `
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+             <select
+              class="form-select Client-transport-name"
+              name="TransporNname"
+              id="TransporNname"
+              required
+            >
+            <option  selected value="">Select Transport Name</option>
+            <option  value="${list[0]}">${list[0]}</option>
+            <option  value="${list[1]}">${list[1]}</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary getTransport-btn" data-bs-dismiss="modal">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  form.insertAdjacentHTML("afterbegin", transportElementList);
+
+  var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {
+    keyboard: false,
+  });
+
+  myModal.show();
+}
+
+

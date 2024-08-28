@@ -15,19 +15,17 @@
 
   <body id="element-to-print">
     <div class="container" id="print">
-      <%- include('./template/header' ) %>
-      <%- include('./template/table') %>
-      <%- include('./template/footer') %>
-      <div class="row d-print-none my-3">
-        <div class="col text-center">
-            <button class="btn btn-primary generatePDF">Print</button>
-            <button class="btn btn-success downloadPDF">Download</button>
-        </div>
-      </div>
+      <% if (receivedProducts.length) { %>
+        <%- include('./template/header') %>
+        <%- include('./template/table') %>
+        <%- include('./template/footer') %>
+      <% } else { %>
+        <script>
+          window.location.href = '/';
+        </script>
+      <% } %>
     </div>
     <!-- Bootstrap  -->
     <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- CUSTOM  -->
-    <script type="module" src="/js/print.js"></script>
   </body>
 </html>
