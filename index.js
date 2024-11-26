@@ -64,7 +64,7 @@ app.get("/download-invoice", async (req, res) => {
     });
     const page = await browser.newPage();
     // Replace with the full URL of your server when deployed
-    await page.goto(`${process.env.SERVER_URL}/print`,  {waitUntil: 'load', timeout: 0});
+    await page.goto(`${process.env.SERVER_URL}/print`,  {waitUntil:  "networkidle0", timeout: 0});
     const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
