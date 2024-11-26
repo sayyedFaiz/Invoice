@@ -1,6 +1,11 @@
 const express = require("express");
-const puppeteer = require("puppeteer-core"); // Use puppeteer-core
-const chromium = require("chrome-aws-lambda"); // Serverless-compatible Chromium
+const puppeteer = require('puppeteer-extra')
+
+// Add stealth plugin and use defaults (all tricks to hide puppeteer usage)
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+
+
+const chromium = require("@sparticuz/chromium");
 const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
@@ -22,6 +27,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(bodyParser.json());
 app.use(cors());
+puppeteer.use(StealthPlugin())
 
 // Serve JSON file route
 app.get("/Client.json", (req, res) => {
@@ -48,20 +54,19 @@ app.get("/print", (req, res) => {
 app.get("/download-invoice", async (req, res) => {
   try {
     // Puppeteer configuration for different environments
+    // const browser = await puppeteer.launch();
     const browser = await puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath || "/usr/bin/google-chrome", // Use local Chrome if available
+      args: [...chromium.args],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
       headless: chromium.headless,
+      ignoreHTTPSErrors: true
     });
-
     const page = await browser.newPage();
-
-    // Load the print page
-    await page.goto(`${process.env.SERVER_URL || `http://localhost:${port}`}/print`, {
+    // Replace with the full URL of your server when deployed
+    await page.goto(`${process.env.SERVER_URL}/print`, {
       waitUntil: "networkidle0",
     });
-
-    // Generate the PDF
     const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
@@ -78,7 +83,7 @@ app.get("/download-invoice", async (req, res) => {
       fileName = `${companyName}-${date}`;
     }
 
-    res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
+    // res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
     res.contentType("application/pdf");
     res.send(pdf);
   } catch (error) {
