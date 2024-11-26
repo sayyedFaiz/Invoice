@@ -1,6 +1,6 @@
 const express = require("express");
 const puppeteer = require("puppeteer-core"); // Use puppeteer-core
-const chromium = require("@sparticuz/chromium"); // Serverless-compatible Chromium
+const chromium = require("@sparticuz/chrome-aws-lambda"); // Serverless-compatible Chromium
 const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
