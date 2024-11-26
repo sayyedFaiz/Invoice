@@ -20,7 +20,7 @@ app.get("/Client.json", (req, res) => {
   res.sendFile(__dirname + "/data/Client.json");
 });
 
-app.get("/invoice", (req, res) => {
+app.get("/", (req, res) => {
   res.render("index", { clientList });
 });
 
