@@ -145,5 +145,13 @@
         "TransportName": "",
         "GSTValue": 9,
         "GST": "CGST"
+    },
+    {
+        "Name": "Hex Solutions",
+        "Address": "3, 3-269, B Block, Kavuri Hills Road, Hyderabad, Hyderabad, Telangana",
+        "GSTNumber": "GST: 36BJJPD1112P1ZA",
+        "TransportName": "",
+        "GSTValue": 18,
+        "GST": "IGST"
     }
 ]
