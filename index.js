@@ -84,6 +84,7 @@ app.get("/download-invoice", async (req, res) => {
     }
 
     // res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
+    res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
     res.contentType("application/pdf");
     res.send(pdf);
   } catch (error) {
