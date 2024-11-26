@@ -2,7 +2,7 @@ const express = require("express");
 const puppeteer = require('puppeteer-extra')
 
 // Add stealth plugin and use defaults (all tricks to hide puppeteer usage)
-const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+// const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 
 
 const chromium = require("@sparticuz/chromium");
@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(bodyParser.json());
 app.use(cors());
-puppeteer.use(StealthPlugin())
+// puppeteer.use(StealthPlugin())
 
 // Serve JSON file route
 app.get("/Client.json", (req, res) => {
