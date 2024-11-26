@@ -51,44 +51,44 @@ app.get("/print", (req, res) => {
 });
 
 // Download invoice as a PDF
-app.get("/download-invoice", async (req, res) => {
-  try {
-    // Puppeteer configuration for different environments
-    // const browser = await puppeteer.launch();
-    const browser = await puppeteer.launch({
-      args: [...chromium.args],
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true
-    });
-    const page = await browser.newPage();
-    // Replace with the full URL of your server when deployed
-    await page.goto(`${process.env.SERVER_URL}/print`,  {waitUntil:  "networkidle0", timeout: 0});
-    const pdf = await page.pdf({
-      format: "A4",
-      printBackground: true,
-      margin: "none",
-      preferCSSPageSize: true,
-    });
+// app.get("/download-invoice", async (req, res) => {
+//   try {
+//     // Puppeteer configuration for different environments
+//     // const browser = await puppeteer.launch();
+//     const browser = await puppeteer.launch({
+//       args: [...chromium.args],
+//       defaultViewport: chromium.defaultViewport,
+//       executablePath: await chromium.executablePath(),
+//       headless: chromium.headless,
+//       ignoreHTTPSErrors: true
+//     });
+//     const page = await browser.newPage();
+//     // Replace with the full URL of your server when deployed
+//     await page.goto(`${process.env.SERVER_URL}/print`,  {waitUntil:  "networkidle0", timeout: 0});
+//     const pdf = await page.pdf({
+//       format: "A4",
+//       printBackground: true,
+//       margin: "none",
+//       preferCSSPageSize: true,
+//     });
 
-    await browser.close();
+//     await browser.close();
 
-    // Determine the filename based on the received products
-    let fileName = `invoice-${date}`;
-    if (receivedProducts && receivedProducts.length > 0) {
-      const companyName = receivedProducts[receivedProducts.length - 1].Name.trim();
-      fileName = `${companyName}-${date}`;
-    }
+//     // Determine the filename based on the received products
+//     let fileName = `invoice-${date}`;
+//     if (receivedProducts && receivedProducts.length > 0) {
+//       const companyName = receivedProducts[receivedProducts.length - 1].Name.trim();
+//       fileName = `${companyName}-${date}`;
+//     }
 
-    // res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
-    res.contentType("application/pdf");
-    res.send(pdf);
-  } catch (error) {
-    console.error("Error generating invoice:", error);
-    res.status(500).send("Error generating invoice");
-  }
-});
+//     // res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
+//     res.contentType("application/pdf");
+//     res.send(pdf);
+//   } catch (error) {
+//     console.error("Error generating invoice:", error);
+//     res.status(500).send("Error generating invoice");
+//   }
+// });
 
 // Start the server
 app.listen(port, () => {

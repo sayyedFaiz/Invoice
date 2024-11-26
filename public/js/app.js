@@ -190,7 +190,8 @@ async function submit() {
 
   if (response.ok) {
     updadateLastInvoice();
-    window.location.href = "/download-invoice";
+    // window.location.href = "/download-invoice";
+    window.print();
   } else {
     console.error("Failed to send products.");
   }
