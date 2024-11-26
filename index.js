@@ -64,9 +64,7 @@ app.get("/download-invoice", async (req, res) => {
     });
     const page = await browser.newPage();
     // Replace with the full URL of your server when deployed
-    await page.goto(`${process.env.SERVER_URL}/print`, {
-      waitUntil: 'load', timeout: 0
-    });
+    await page.goto(`${process.env.SERVER_URL}/print`,  {waitUntil: 'load', timeout: 0});
     const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
@@ -84,7 +82,6 @@ app.get("/download-invoice", async (req, res) => {
     }
 
     // res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
-    res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
     res.contentType("application/pdf");
     res.send(pdf);
   } catch (error) {
