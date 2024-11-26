@@ -1,6 +1,6 @@
 const express = require("express");
 const puppeteer = require("puppeteer-core"); // Use puppeteer-core
-const chromium = require("@sparticuz/chromium"); // Serverless-compatible Chromium
+const chromium = require("chrome-aws-lambda"); // Serverless-compatible Chromium
 const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
@@ -48,12 +48,12 @@ app.get("/print", (req, res) => {
 app.get("/download-invoice", async (req, res) => {
   try {
     // Puppeteer configuration for different environments
-    const executablePath = await chromium.executablePath();
     const browser = await puppeteer.launch({
       args: chromium.args,
-      executablePath,  // Fetch Chromium executable
-      headless: chromium.headless,  // Ensure headless mode
+      executablePath: await chromium.executablePath || "/usr/bin/google-chrome", // Use local Chrome if available
+      headless: chromium.headless,
     });
+
     const page = await browser.newPage();
 
     // Load the print page
