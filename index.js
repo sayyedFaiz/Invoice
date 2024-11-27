@@ -1,11 +1,6 @@
 const express = require("express");
-const puppeteer = require('puppeteer-extra')
-
-// Add stealth plugin and use defaults (all tricks to hide puppeteer usage)
-// const StealthPlugin = require('puppeteer-extra-plugin-stealth')
-
-
-const chromium = require("@sparticuz/chromium");
+const puppeteer = require('puppeteer')
+// const chromium = require("@sparticuz/chromium");
 const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
@@ -27,7 +22,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(bodyParser.json());
 app.use(cors());
-// puppeteer.use(StealthPlugin())
+
 
 // Serve JSON file route
 app.get("/Client.json", (req, res) => {
@@ -51,10 +46,10 @@ app.get("/print", (req, res) => {
 });
 
 // Download invoice as a PDF
-// app.get("/download-invoice", async (req, res) => {
-//   try {
-//     // Puppeteer configuration for different environments
-//     // const browser = await puppeteer.launch();
+app.get("/download-invoice", async (req, res) => {
+  try {
+    // Puppeteer configuration for different environments
+    const browser = await puppeteer.launch();
 //     const browser = await puppeteer.launch({
 //       args: [...chromium.args],
 //       defaultViewport: chromium.defaultViewport,
@@ -62,33 +57,33 @@ app.get("/print", (req, res) => {
 //       headless: chromium.headless,
 //       ignoreHTTPSErrors: true
 //     });
-//     const page = await browser.newPage();
+    const page = await browser.newPage();
 //     // Replace with the full URL of your server when deployed
-//     await page.goto(`${process.env.SERVER_URL}/print`,  {waitUntil:  "networkidle0", timeout: 0});
-//     const pdf = await page.pdf({
-//       format: "A4",
-//       printBackground: true,
-//       margin: "none",
-//       preferCSSPageSize: true,
-//     });
+    await page.goto(`${process.env.SERVER_URL}/print`,  {waitUntil:  "networkidle0", timeout: 0});
+    const pdf = await page.pdf({
+      format: "A4",
+      printBackground: true,
+      margin: "none",
+      preferCSSPageSize: true,
+    });
 
-//     await browser.close();
+    await browser.close();
 
 //     // Determine the filename based on the received products
-//     let fileName = `invoice-${date}`;
-//     if (receivedProducts && receivedProducts.length > 0) {
-//       const companyName = receivedProducts[receivedProducts.length - 1].Name.trim();
-//       fileName = `${companyName}-${date}`;
-//     }
+    let fileName = `invoice-${date}`;
+    if (receivedProducts && receivedProducts.length > 0) {
+      const companyName = receivedProducts[receivedProducts.length - 1].Name.trim();
+      fileName = `${companyName}-${date}`;
+    }
 
-//     // res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
-//     res.contentType("application/pdf");
-//     res.send(pdf);
-//   } catch (error) {
-//     console.error("Error generating invoice:", error);
-//     res.status(500).send("Error generating invoice");
-//   }
-// });
+    res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
+    res.contentType("application/pdf");
+    res.send(pdf);
+  } catch (error) {
+    console.error("Error generating invoice:", error);
+    res.status(500).send("Error generating invoice");
+  }
+});
 
 // Start the server
 app.listen(port, () => {
