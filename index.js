@@ -57,9 +57,9 @@ app.get("/download-invoice", async (req, res) => {
 //       headless: chromium.headless,
 //       ignoreHTTPSErrors: true
 //     });
-    const page = await browser.newPage();
+    const page = await browser.newPage({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']});
 //     // Replace with the full URL of your server when deployed
-    await page.goto(`${process.env.SERVER_URL}/print`,  {waitUntil:  "networkidle0", timeout: 0});
+    await page.goto(`http://localhost:${port}/print`,  {waitUntil:  "networkidle0"});
     const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
@@ -76,7 +76,7 @@ app.get("/download-invoice", async (req, res) => {
       fileName = `${companyName}-${date}`;
     }
 
-    res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
+    // res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
     res.contentType("application/pdf");
     res.send(pdf);
   } catch (error) {
