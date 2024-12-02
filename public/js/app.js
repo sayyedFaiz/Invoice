@@ -6,7 +6,7 @@ var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 var products = [];
 var clientList;
-const lastInvoiceNumber = localStorage.getItem("InvoiceNumber") ? localStorage.getItem("InvoiceNumber") :  localStorage.setItem("InvoiceNumber", 0);;
+const lastInvoiceNumber = localStorage.getItem("InvoiceNumber") ? localStorage.getItem("InvoiceNumber") :  localStorage.setItem("InvoiceNumber", 0);
 var lastInvoiceNumberElement = document.querySelector(".lastInvoiceNumber");
 if (lastInvoiceNumber) {
   lastInvoiceNumberElement.innerHTML = lastInvoiceNumber;
