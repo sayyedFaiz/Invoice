@@ -1,10 +1,15 @@
+var data = {
+  clientInfo: [],
+  products: [],
+};
+
 var form = document.querySelector(".invoiceForm");
 var addButton = document.querySelector(".btn-add");
 var submitButton = document.querySelector(".submitButton");
 var deleteButton = document.querySelector(".btn-delete");
 var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
-var products = [];
+
 var clientList;
 const lastInvoiceNumber = localStorage.getItem("InvoiceNumber")
   ? localStorage.getItem("InvoiceNumber")
@@ -27,65 +32,83 @@ async function getClients() {
   }
 }
 
-addButton.addEventListener("pointerdown", (e) => addProducts(e));
+addButton.addEventListener("pointerdown", (e) => addProducts(e, data));
 addButton.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") addProducts(e);
+  if (e.key === "Enter") addProducts(e, data);
 });
-deleteButton.addEventListener("pointerdown", () => deleteProducts());
+deleteButton.addEventListener("pointerdown", () => deleteProducts(data));
 
-function updateProducts() {
-  const data = Object.fromEntries(new FormData(form).entries());
-  let productQuantity = parseFloat(data.Quantity);
-  let productPrice = parseFloat(data.Price);
+function updateProducts(data) {
+  const productData = Object.fromEntries(new FormData(form).entries());
+  console.log("formData:", productData);
+  let products = productData.products;
+  let productQuantity = parseFloat(productData.Quantity);
+  let productPrice = parseFloat(productData.Price);
   let productAmount = productQuantity * productPrice;
   // Set an item in local storage
-  if (products.length <= 10) {
-    products.unshift({
-      date: new Date(data.Date).toLocaleDateString("en-GB"),
-      InvoiceNumber: data.InvoiceNumber,
-      ProductName: data.ProductName,
-      HSN: data.HSN,
-      Quantity: productQuantity,
-      Price: productPrice,
-      Amount: productAmount,
+  console.log("data:", data);
+  if (data.products.length <= 10) {
+    Object.assign(data, {
+      date: new Date(productData.Date).toLocaleDateString("en-GB"),
+      invoiceNumber: productData.InvoiceNumber,
+      products: [
+        {
+          ProductName: productData.ProductName,
+          HSN: productData.HSN,
+          Quantity: productQuantity,
+          Price: productPrice,
+          Amount: productAmount,
+        },
+      ],
     });
+    // products.unshift({
+    //   date: new Date(productData.Date).toLocaleDateString("en-GB"),
+    //   InvoiceNumber: productData.InvoiceNumber,
+    //   ProductName: productData.ProductName,
+    //   HSN: productData.HSN,
+    //   Quantity: productQuantity,
+    //   Price: productPrice,
+    //   Amount: productAmount,
+    // });
     let item = `
     <tr>
-      <td>${products.length - 1}</td>
-      <td>${products[0].ProductName}</td>
-      <td>${products[0].HSN}</td>
-      <td>${productQuantity}</td>
-      <td>${productPrice.toFixed(2)}</td>
-      <td>${productAmount.toFixed(2)}</td>
+      <td>${data.products.length}</td>
+      <td>${data.products[0].ProductName}</td>
+      <td>${data.products[0].HSN}</td>
+      <td>${data.products[0].Quantity}</td>
+      <td>${data.products[0].Price.toFixed(2)}</td>
+      <td>${data.products[0].Amount.toFixed(2)}</td>
     </tr>`;
     productTable.insertAdjacentHTML("beforeend", item);
-    calculateTotal();
+    calculateTotal(data);
   }
 }
 
-async function calculateTotal() {
+async function calculateTotal(data) {
+  console.log(data);
   let taxes = await getGST();
   let CGST = parseFloat(taxes[0]);
   let SGST = parseFloat(taxes[1]);
   let IGST = parseFloat(taxes[2]);
-  products[0]["CGST_Value"] = CGST;
-  products[0]["SGST_Value"] = SGST;
-  products[0]["IGST_Value"] = IGST;
+  data.clientInfo["CGST_Value"] = CGST;
+  data.clientInfo["SGST_Value"] = SGST;
+  data.clientInfo["IGST_Value"] = IGST;
   let roundOff = 0;
   let grandTotal = 0;
-  products.forEach((product) => {
+  data.products.forEach((product) => {
     if (product.Amount) {
       grandTotal = grandTotal + product.Amount;
-      products[0]["total"] = grandTotal;
+      // products[0]["total"] = grandTotal;
+      product.total = grandTotal;
     }
   });
   document.querySelector(".totalBeforeTax").innerHTML = grandTotal;
   document.querySelector(".CGST").innerHTML = (grandTotal * CGST) / 100;
   document.querySelector(".SGST").innerHTML = (grandTotal * SGST) / 100;
   document.querySelector(".IGST").innerHTML = (grandTotal * IGST) / 100;
-  products[0]["CGST"] = (grandTotal * CGST) / 100;
-  products[0]["SGST"] = (grandTotal * SGST) / 100;
-  products[0]["IGST"] = (grandTotal * IGST) / 100;
+  data.products[0]["CGST"] = (grandTotal * CGST) / 100;
+  data.products[0]["SGST"] = (grandTotal * SGST) / 100;
+  data.products[0]["IGST"] = (grandTotal * IGST) / 100;
   grandTotal =
     grandTotal +
     (grandTotal * parseFloat(IGST)) / 100 +
@@ -95,15 +118,16 @@ async function calculateTotal() {
   document.querySelector(".grandTotal").innerHTML =
     Math.round(grandTotal).toFixed(2);
   document.querySelector(".roundOff").innerHTML = roundOff;
-  products[0]["grandTotal"] = Math.round(grandTotal).toFixed(2);
-  products[0]["roundOff"] = roundOff;
+  data.products[0]["grandTotal"] = Math.round(grandTotal).toFixed(2);
+  data.products[0]["roundOff"] = roundOff;
 }
-
 clientName.addEventListener("change", async (e) => {
+  console.log("change");
+  console.log(data);
   clientList = await getClients();
   clientList.forEach((client) => {
     if (client.Name == e.target.value) {
-      products.pop();
+      data.clientInfo.pop();
       document.querySelector(".client__Company-Name").innerHTML = client.Name;
       document.querySelector(".client__GST-number").innerHTML =
         client.GSTNumber;
@@ -121,22 +145,25 @@ clientName.addEventListener("change", async (e) => {
           let transportName = document.querySelector(
             ".Client-transport-name"
           ).value;
-
-          document.querySelector(
-            ".client__Trasnport-details"
-          ).innerHTML = `${transportName}
+          (client.TransportName = client.TransportName.filter((name) => {
+            return name == transportName;
+          })),
+            (document.querySelector(
+              ".client__Trasnport-details"
+            ).innerHTML = `${transportName}
           <button class='btn btn-secondary changeTransport d-print-none' data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change</button>
-          `;
+          `);
         });
       } else {
         document.querySelector(".client__Trasnport-details").innerHTML =
           client.TransportName;
       }
-      products.push(client);
-      console.log(products);
+      // client.TransportName
+
+      data.clientInfo = client;
     }
   });
-  calculateTotal();
+  calculateTotal(data);
 });
 
 function clearInputFields() {
@@ -171,9 +198,9 @@ submitButton.addEventListener("pointerdown", () => {
   products.length > 1 ? submit() : alert("Please Enter atleast One Product");
 });
 
-function addProducts(e) {
+function addProducts(e, data) {
   if (form.checkValidity()) {
-    updateProducts();
+    updateProducts(data);
     clearInputFields();
   } else {
     form.classList.add("was-validated");
@@ -182,16 +209,19 @@ function addProducts(e) {
   }
 }
 
-function deleteProducts() {
-  if (products.length) {
-    products = products.slice(1);
+function deleteProducts(data) {
+  console.log(data);
+  if (data.products.length > 0) {
+    console.log("deleted");
+    data.products = data.products.slice(1);
     productTable.lastElementChild.remove();
-    calculateTotal();
+    calculateTotal(data);
     clearInputFields();
   }
 }
 
 async function submit() {
+  console.log({ products });
   const response = await fetch("/print", {
     method: "POST",
     headers: {
