@@ -23,7 +23,10 @@
     "install": "^0.13.0",
     "nodejs": "0.0.0",
     "pdfkit": "^0.15.0",
-    "puppeteer": "^22.15.0"
+    "puppeteer": "^22.15.0",
+    "puppeteer-core": "^10.1.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.41.1",

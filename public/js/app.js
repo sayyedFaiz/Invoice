@@ -11,7 +11,7 @@ var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 
 var clientList;
-const lastInvoiceNumber = localStorage.getItem("InvoiceNumber") ? localStorage.getItem("InvoiceNumber") :  localStorage.setItem("InvoiceNumber", 0);
+const lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
 var lastInvoiceNumberElement = document.querySelector(".lastInvoiceNumber");
 if (lastInvoiceNumber) {
   lastInvoiceNumberElement.innerHTML = lastInvoiceNumber;
@@ -218,9 +218,7 @@ async function submit() {
   if (response.ok) {
     updadateLastInvoice();
 
-    // window.location.href = "/download-invoice";
-    window.open('/download-invoice', '_blank');
-
+    window.location.href = "/download-invoice";
   } else {
     console.error("Failed to send products.");
   }
