@@ -153,5 +153,13 @@
         "TransportName": "",
         "GSTValue": 18,
         "GST": "IGST"
+    },
+    {
+        "Name": "R.T HARDWARE FACTORY",
+        "Address": "101, Dipti Apartment, 5th Mamla Tdarwadi, Near Jain Mandir, Malad (W), Mumbai-400064",
+        "GSTNumber": "GST: 27BCBPS4158K1Z7",
+        "TransportName": "",
+        "GSTValue": 9,
+        "GST": "CGST"
     }
 ]

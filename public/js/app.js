@@ -6,7 +6,9 @@ var productTable = document.querySelector("tbody");
 var clientName = document.querySelector(".Client-company-name");
 var products = [];
 var clientList;
-const lastInvoiceNumber = localStorage.getItem("InvoiceNumber");
+const lastInvoiceNumber = localStorage.getItem("InvoiceNumber")
+  ? localStorage.getItem("InvoiceNumber")
+  : localStorage.setItem("InvoiceNumber", 0);
 var lastInvoiceNumberElement = document.querySelector(".lastInvoiceNumber");
 if (lastInvoiceNumber) {
   lastInvoiceNumberElement.innerHTML = lastInvoiceNumber;
@@ -108,20 +110,30 @@ clientName.addEventListener("change", async (e) => {
       document.querySelector(".client__address").innerHTML = client.Address;
 
       if (client.TransportName.length > 1) {
+        document.querySelector(
+          ".client__Trasnport-details"
+        ).innerHTML = `${client.TransportName[0]}
+        <button class='btn btn-secondary changeTransport d-print-none' data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change</button>
+        `;
         selectTransport(client.TransportName);
         let getTransportBtn = document.querySelector(".getTransport-btn");
         getTransportBtn.addEventListener("pointerdown", () => {
-          let transportName = document.querySelector(".Client-transport-name").value;
-          document.querySelector(".client__Trasnport-details").innerHTML = transportName
-          client.TransportName = (client.TransportName).filter(el => el === transportName)
-          console.log(client.TransportName)
+          let transportName = document.querySelector(
+            ".Client-transport-name"
+          ).value;
+
+          document.querySelector(
+            ".client__Trasnport-details"
+          ).innerHTML = `${transportName}
+          <button class='btn btn-secondary changeTransport d-print-none' data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change</button>
+          `;
         });
       } else {
         document.querySelector(".client__Trasnport-details").innerHTML =
           client.TransportName;
       }
       products.push(client);
-      console.log(products)
+      console.log(products);
     }
   });
   calculateTotal();
@@ -190,7 +202,7 @@ async function submit() {
 
   if (response.ok) {
     updadateLastInvoice();
-    window.location.href = "/download-invoice";
+    window.open("/download-invoice", "_blank");
   } else {
     console.error("Failed to send products.");
   }
@@ -209,11 +221,11 @@ function updadateLastInvoice() {
 function selectTransport(list) {
   let transportElementList = `
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" >
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-target="#staticBackdrop">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Select Transport</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -223,26 +235,23 @@ function selectTransport(list) {
               id="TransporNname"
               required
             >
-            <option  selected value="">Select Transport Name</option>
-            <option  value="${list[0]}">${list[0]}</option>
-            <option  value="${list[1]}">${list[1]}</option>
+            <option  selected disabled>Select Transport Name</option>
+            ${renderTransportOptions(list)}
             </select>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary getTransport-btn" data-bs-dismiss="modal">Save changes</button>
+            <button type="button" class="btn btn-primary getTransport-btn" data-bs-dismiss="modal">Save</button>
           </div>
         </div>
       </div>
     </div>
     `;
   form.insertAdjacentHTML("afterbegin", transportElementList);
-
-  var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {
-    keyboard: false,
-  });
-
-  myModal.show();
 }
 
-
+function renderTransportOptions(list) {
+  return list
+    .map((transport) => `<option value="${transport}">${transport}</option>`)
+    .join("");
+}
