@@ -1,5 +1,5 @@
 const express = require("express");
-const puppeteer = require("puppeteer");
+const puppeteer = require('puppeteer')
 // const chromium = require("@sparticuz/chromium");
 const path = require("path");
 const cors = require("cors");
@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(bodyParser.json());
 app.use(cors());
+
 
 // Serve JSON file route
 app.get("/Client.json", (req, res) => {
@@ -49,14 +50,16 @@ app.get("/download-invoice", async (req, res) => {
   try {
     // Puppeteer configuration for different environments
     const browser = await puppeteer.launch();
-    const page = await browser.newPage({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-    //     // Replace with the full URL of your server when deployed
-    await page.goto(`http://localhost:${port}/print`, {
-      waitUntil: "networkidle0",
-    });
+//     const browser = await puppeteer.launch({
+//       args: [...chromium.args],
+//       defaultViewport: chromium.defaultViewport,
+//       executablePath: await chromium.executablePath(),
+//       headless: chromium.headless,
+//       ignoreHTTPSErrors: true
+//     });
+    const page = await browser.newPage({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']});
+//     // Replace with the full URL of your server when deployed
+    await page.goto(`http://localhost:${port}/print`,  {waitUntil:  "networkidle0"});
     const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
@@ -66,18 +69,14 @@ app.get("/download-invoice", async (req, res) => {
 
     await browser.close();
 
-    //     // Determine the filename based on the received products
+//     // Determine the filename based on the received products
     let fileName = `invoice-${date}`;
     if (receivedProducts && receivedProducts.length > 0) {
-      const companyName =
-        receivedProducts[receivedProducts.length - 1].Name.trim();
+      const companyName = receivedProducts[receivedProducts.length - 1].Name.trim();
       fileName = `${companyName}-${date}`;
     }
 
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="${fileName}.pdf"`
-    );
+    // res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
     res.contentType("application/pdf");
     res.send(pdf);
   } catch (error) {
