@@ -1,5 +1,5 @@
 const express = require("express");
-const puppeteer = require('puppeteer')
+const puppeteer = require("puppeteer");
 // const chromium = require("@sparticuz/chromium");
 const path = require("path");
 const cors = require("cors");
@@ -9,7 +9,6 @@ const clientList = require("./data/Client.json");
 
 const app = express();
 let receivedProducts = [];
-const date = new Date().toJSON().slice(0, 10);
 const port = process.env.PORT || 3000; // Default to port 3000 for local testing
 
 // Set up view engine and paths
@@ -22,7 +21,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(bodyParser.json());
 app.use(cors());
-
 
 // Serve JSON file route
 app.get("/Client.json", (req, res) => {
@@ -50,16 +48,19 @@ app.get("/download-invoice", async (req, res) => {
   try {
     // Puppeteer configuration for different environments
     const browser = await puppeteer.launch();
-//     const browser = await puppeteer.launch({
-//       args: [...chromium.args],
-//       defaultViewport: chromium.defaultViewport,
-//       executablePath: await chromium.executablePath(),
-//       headless: chromium.headless,
-//       ignoreHTTPSErrors: true
-//     });
+    //     const browser = await puppeteer.launch({
+    //       args: [...chromium.args],
+    //       defaultViewport: chromium.defaultViewport,
+    //       executablePath: await chromium.executablePath(),
+    //       headless: chromium.headless,
+    //       ignoreHTTPSErrors: true
+    //     });
     const page = await browser.newPage();
-//     // Replace with the full URL of your server when deployed
-    await page.goto(`${process.env.SERVER_URL}/print`,  {waitUntil:  "networkidle0", timeout: 0});
+    //     // Replace with the full URL of your server when deployed
+    await page.goto(`${process.env.SERVER_URL}/print`, {
+      waitUntil: "networkidle0",
+      timeout: 0,
+    });
     const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
@@ -69,14 +70,20 @@ app.get("/download-invoice", async (req, res) => {
 
     await browser.close();
 
-//     // Determine the filename based on the received products
+    //     // Determine the filename based on the received products
+    let date = new Date().toJSON().slice(0, 10);
     let fileName = `invoice-${date}`;
     if (receivedProducts && receivedProducts.length > 0) {
-      const companyName = receivedProducts[receivedProducts.length - 1].Name.trim();
+      const companyName =
+        receivedProducts[receivedProducts.length - 1].Name.trim();
+
       fileName = `${companyName}-${date}`;
     }
 
-    res.setHeader("Content-Disposition", `attachment; filename="${fileName}.pdf"`);
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${fileName}.pdf"`
+    );
     res.contentType("application/pdf");
     res.send(pdf);
   } catch (error) {
